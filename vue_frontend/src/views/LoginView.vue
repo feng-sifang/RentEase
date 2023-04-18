@@ -6,14 +6,19 @@
           <div class="card padding-card mb-0">
             <div class="card-body">
               <h5 class="card-title mb-4">Login</h5>
-              <form action="/post-signin" method="post">
+              <form>
                 <div class="form-group">
-                  <label>Email address<span class="text-danger">*</span></label>
-                  <input type="email" class="form-control" placeholder="Enter Email address" name="email"/>
+                  <!-- "for" attribute connect to the input's id can help to locate to input even when user click label -->
+                  <label for="login-email">Email Address<span class="text-danger">*</span></label>
+                  <input
+                    type="email" class="form-control" name="login-email" id="login-email"
+                    placeholder="Enter Email Address" v-model="loginEmail"/>
                 </div>
                 <div class="form-group">
-                  <label>Password<span class="text-danger">*</span></label>
-                  <input type="password" class="form-control" placeholder="Enter Password" name="password"/>
+                  <label for="login-password">Password<span class="text-danger">*</span></label>
+                  <input
+                    type="password" class="form-control" name="login-password" id="login-password"
+                    placeholder="Enter Password" v-model="loginPassword"/>
                 </div>
                 <div class="form-group">
                   <div class="custom-control custom-checkbox">
@@ -24,10 +29,7 @@
                     </label>
                   </div>
                 </div>
-                <button
-                  type="submit"
-                  class="btn btn-success btn-block"
-                >
+                <button type="submit" class="btn btn-success btn-block" @click="loginCheck">
                   SIGN IN
                 </button>
               </form>
@@ -52,6 +54,36 @@
 
 <script>
 export default {
-  name: 'LoginView'
+  name: 'LoginView',
+  data () {
+    return {
+      loginEmail: '',
+      loginPassword: '',
+      loginStatus: null,
+    }
+  },
+  methods: {
+    async loginCheck (event) {
+      event.preventDefault()
+      const data = {
+        'login-email': this.loginEmail,
+        'login-password': this.loginPassword,
+      }
+      try {
+        const response = await this.axios.post('/post-signin/', data)
+
+        if (response.data.success) {
+          // {'success': True}
+          this.loginStatus = true
+        } else {
+          this.loginStatus = false
+          alert('Incorrect email or password. Please try again.')
+        }
+      } catch (error) {
+        this.loginStatus = false
+        console.error(error)
+      }
+    },
+  },
 }
 </script>
