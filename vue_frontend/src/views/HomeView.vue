@@ -1,187 +1,7 @@
 <template>
   <header>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a
-          class="navbar-brand text-success logo" href=""
-        ><img
-          class="img-fluid"
-          src="/static/picture/logo.svg"
-          alt=""/></a
-        >
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="">Home</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownPortfolio"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >Properties
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownPortfolio"
-              >
-                <a
-                  class="dropdown-item"
-                  href="#"
-                >Properties Grid</a
-                ><a
-                class="dropdown-item"
-                href="#"
-              >Properties List</a
-              ><a
-                class="dropdown-item"
-                href="#"
-              >Property Single Slider</a
-              ><a
-                class="dropdown-item"
-                href="#"
-              >Property Single Gallery</a
-              >
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownPortfolio"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >Agency
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownPortfolio"
-              >
-                <a
-                  class="dropdown-item"
-                  href="#"
-                >Agency List</a>
-                <a
-                  class="dropdown-item"
-                  href="#"
-                >Agency Profile</a>
-                <a
-                  class="dropdown-item" href="#"
-                >Agents</a>
-                <a
-                  class="dropdown-item"
-                  href="#"
-                >Agent Profile</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownPortfolio"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >Blog
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownPortfolio"
-              >
-                <a
-                  class="dropdown-item" href="#"
-                >Blog</a
-                ><a
-                class="dropdown-item"
-                href="#"
-              >Blog Single</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownPortfolio"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >My Account
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownPortfolio"
-              >
-                <a
-                  class="dropdown-item"
-                  href="#"
-                >User Profile</a>
-                <a
-                  class="dropdown-item"
-                  href="#"
-                >Social Profiles</a>
-                <a
-                  class="dropdown-item"
-                  href="#"
-                >My Properties</a>
-                <a
-                  class="dropdown-item"
-                  href="#"
-                >Favorite Properties</a>
-                <a
-                  class="dropdown-item"
-                  href="#"
-                >Add Property</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownPortfolio"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false">
-                Pages
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="#">
-                  About Us
-                </a>
-                <a class="dropdown-item" href="#">
-                  FAQ
-                </a>
-                <a
-                  class="dropdown-item"
-                  href="#">
-                  Contact
-                </a>
-              </div>
-            </li>
-          </ul>
-          <div class="my-2 my-lg-0">
-            <ul class="list-inline main-nav-right">
-              <li class="list-inline-item">
-                <router-link to="/login" class="btn btn-link btn-sm">Login</router-link>
-
-              </li>
-              <li class="list-inline-item">
-                <a
-                  class="btn btn-success btn-sm"
-                  href="#"
-                >Sign Up</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <nav-bar></nav-bar>
   </header>
   <!-- End Navbar -->
   <!-- Main Slider With Form -->
@@ -263,9 +83,7 @@
                 <div class="input-group-addon">
                   <i class="mdi mdi-google-maps"></i>
                 </div>
-                <select
-                  class="form-control select2 no-radius"
-                >
+                <select class="form-control select2 no-radius">
                   <option value="">Locations</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
@@ -275,9 +93,7 @@
                   <option value="CO">Colorado</option>
                   <option value="CT">Connecticut</option>
                   <option value="DE">Delaware</option>
-                  <option value="DC">
-                    District Of Columbia
-                  </option>
+                  <option value="DC">District Of Columbia</option>
                   <option value="FL">Florida</option>
                   <option value="GA">Georgia</option>
                   <option value="HI">Hawaii</option>
@@ -290,9 +106,7 @@
                   <option value="LA">Louisiana</option>
                   <option value="ME">Maine</option>
                   <option value="MD">Maryland</option>
-                  <option value="MA">
-                    Massachusetts
-                  </option>
+                  <option value="MA">Massachusetts</option>
                   <option value="MI">Michigan</option>
                   <option value="MN">Minnesota</option>
                   <option value="MS">Mississippi</option>
@@ -300,24 +114,18 @@
                   <option value="MT">Montana</option>
                   <option value="NE">Nebraska</option>
                   <option value="NV">Nevada</option>
-                  <option value="NH">
-                    New Hampshire
-                  </option>
+                  <option value="NH">New Hampshire</option>
                   <option value="NJ">New Jersey</option>
                   <option value="NM">New Mexico</option>
                   <option value="NY">New York</option>
-                  <option value="NC">
-                    North Carolina
-                  </option>
+                  <option value="NC">North Carolina</option>
                   <option value="ND">North Dakota</option>
                   <option value="OH">Ohio</option>
                   <option value="OK">Oklahoma</option>
                   <option value="OR">Oregon</option>
                   <option value="PA">Pennsylvania</option>
                   <option value="RI">Rhode Island</option>
-                  <option value="SC">
-                    South Carolina
-                  </option>
+                  <option value="SC">South Carolina</option>
                   <option value="SD">South Dakota</option>
                   <option value="TN">Tennessee</option>
                   <option value="TX">Texas</option>
@@ -325,9 +133,7 @@
                   <option value="VT">Vermont</option>
                   <option value="VA">Virginia</option>
                   <option value="WA">Washington</option>
-                  <option value="WV">
-                    West Virginia
-                  </option>
+                  <option value="WV">West Virginia</option>
                   <option value="WI">Wisconsin</option>
                   <option value="WY">Wyoming</option>
                 </select>
@@ -477,322 +283,14 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-4">
-          <div class="card card-list">
-            <a
-              href="#"
-            ><span
-              class="badge badge-success"
-            >For Sale</span
-            ><img
-              class="card-img-top"
-              src="/static/picture/11.png"
-              alt="Card image cap"
-            />
-              <div class="card-body">
-                <h5 class="card-title">
-                  House in Kent Street
-                </h5>
-                <h6 class="card-subtitle mb-2 text-muted">
-                  <i class="mdi mdi-home-map-marker"></i
-                  >127 Kent Sreet,Sydny,NEW 2000
-                </h6>
-                <div class="review-block-rate">
-                  <i class="mdi mdi-star"></i
-                  ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><span
-                  class="badge-pill badge-success ml-2"
-                >3.2</span
-                >
-                </div>
-                <h2 class="text-success mb-0 mt-3">
-                  $130,000 <small>/month</small>
-                </h2>
-              </div>
-              <div class="card-footer">
-                                    <span
-                                    ><i class="mdi mdi-sofa"></i
-                                    >Beds:<strong>3</strong></span
-                                    ><span
-              ><i class="mdi mdi-scale-bathroom"></i
-              >Baths:<strong>2</strong></span
-              ><span
-              ><i
-                class="mdi mdi-move-resize-variant"
-              ></i
-              >Area:<strong>587 sq ft</strong></span
-              >
-              </div>
-            </a
-            >
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-4">
-          <div class="card card-list">
-            <a
-              href="#"
-            ><span
-              class="badge badge-secondary"
-            >For Rent</span
-            ><img
-              class="card-img-top"
-              src="/static/picture/21.png"
-              alt="Card image cap"
-            />
-              <div class="card-body">
-                <h5 class="card-title">
-                  Family House in Hudson
-                </h5>
-                <h6 class="card-subtitle mb-2 text-muted">
-                  <i class="mdi mdi-home-map-marker"></i
-                  >Hoboken,NJ,USA
-                </h6>
-                <div class="review-block-rate">
-                  <i class="mdi mdi-star"></i
-                  ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><span
-                  class="badge-pill badge-success ml-2"
-                >3.2</span
-                >
-                </div>
-                <h2 class="text-success mb-0 mt-3">
-                  $127,000 <small>/month</small>
-                </h2>
-              </div>
-              <div class="card-footer">
-                                    <span
-                                    ><i class="mdi mdi-sofa"></i
-                                    >Beds:<strong>5</strong></span
-                                    ><span
-              ><i class="mdi mdi-scale-bathroom"></i
-              >Baths:<strong>3</strong></span
-              ><span
-              ><i
-                class="mdi mdi-move-resize-variant"
-              ></i
-              >Area:<strong>300 sq ft</strong></span
-              >
-              </div>
-            </a
-            >
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-4">
-          <div class="card card-list">
-            <a
-              href="#"
-            ><span
-              class="badge badge-success"
-            >For Sale</span
-            ><img
-              class="card-img-top"
-              src="/static/picture/31.png"
-              alt="Card image cap"
-            />
-              <div class="card-body">
-                <h5 class="card-title">
-                  Loft Above The City
-                </h5>
-                <h6 class="card-subtitle mb-2 text-muted">
-                  <i class="mdi mdi-home-map-marker"></i
-                  >Hope Street(Stop P),London SW11,UK
-                </h6>
-                <div class="review-block-rate">
-                  <i class="mdi mdi-star"></i
-                  ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><span
-                  class="badge-pill badge-success ml-2"
-                >3.2</span
-                >
-                </div>
-                <h2 class="text-success mb-0 mt-3">
-                  $55,000 <small>/month</small>
-                </h2>
-              </div>
-              <div class="card-footer">
-                                    <span
-                                    ><i class="mdi mdi-sofa"></i
-                                    >Beds:<strong>2</strong></span
-                                    ><span
-              ><i class="mdi mdi-scale-bathroom"></i
-              >Baths:<strong>1</strong></span
-              ><span
-              ><i
-                class="mdi mdi-move-resize-variant"
-              ></i
-              >Area:<strong>100 sq ft</strong></span
-              >
-              </div>
-            </a
-            >
-          </div>
-        </div>
+        <single-block></single-block>
+        <single-block></single-block>
+        <single-block></single-block>
       </div>
       <div class="row">
-        <div class="col-lg-4 col-md-4">
-          <div class="card card-list">
-            <a
-              href="#"
-            ><span class="badge badge-danger">For Sale</span
-            ><img
-              class="card-img-top"
-              src="/static/picture/41.png"
-              alt="Card image cap"
-            />
-              <div class="card-body">
-                <h5 class="card-title">
-                  Store Space Greenville
-                </h5>
-                <h6 class="card-subtitle mb-2 text-muted">
-                  <i class="mdi mdi-home-map-marker"></i
-                  >250-260 3rd St,Hoboken,NJ 07030,USA
-                </h6>
-                <div class="review-block-rate">
-                  <i class="mdi mdi-star"></i
-                  ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><span
-                  class="badge-pill badge-success ml-2"
-                >3.2</span
-                >
-                </div>
-                <h2 class="text-success mb-0 mt-3">
-                  $25,000 <small>/month</small>
-                </h2>
-              </div>
-              <div class="card-footer">
-                                    <span
-                                    ><i class="mdi mdi-sofa"></i
-                                    >Beds:<strong>6</strong></span
-                                    ><span
-              ><i class="mdi mdi-scale-bathroom"></i
-              >Baths:<strong>4</strong></span
-              ><span
-              ><i
-                class="mdi mdi-move-resize-variant"
-              ></i
-              >Area:<strong>987 sq ft</strong></span
-              >
-              </div>
-            </a
-            >
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-4">
-          <div class="card card-list">
-            <a
-              href="#"
-            ><span
-              class="badge badge-warning"
-            >For Rent</span
-            ><img
-              class="card-img-top"
-              src="/static/picture/51.png"
-              alt="Card image cap"
-            />
-              <div class="card-body">
-                <h5 class="card-title">
-                  Villa in Melbourne
-                </h5>
-                <h6 class="card-subtitle mb-2 text-muted">
-                  <i class="mdi mdi-home-map-marker"></i
-                  >NJ 07305,USA
-                </h6>
-                <div class="review-block-rate">
-                  <i class="mdi mdi-star"></i
-                  ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><span
-                  class="badge-pill badge-success ml-2"
-                >3.2</span
-                >
-                </div>
-                <h2 class="text-success mb-0 mt-3">
-                  $12,000 <small>/month</small>
-                </h2>
-              </div>
-              <div class="card-footer">
-                                    <span
-                                    ><i class="mdi mdi-sofa"></i
-                                    >Beds:<strong>8</strong></span
-                                    ><span
-              ><i class="mdi mdi-scale-bathroom"></i
-              >Baths:<strong>4</strong></span
-              ><span
-              ><i
-                class="mdi mdi-move-resize-variant"
-              ></i
-              >Area:<strong>120 sq ft</strong></span
-              >
-              </div>
-            </a
-            >
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-4">
-          <div class="card card-list">
-            <a
-              href="#"
-            ><span class="badge badge-info">For Rent</span
-            ><img
-              class="card-img-top"
-              src="/static/picture/61.png"
-              alt="Card image cap"
-            />
-              <div class="card-body">
-                <h5 class="card-title">
-                  Villa on Hollywood Boulev
-                </h5>
-                <h6 class="card-subtitle mb-2 text-muted">
-                  <i class="mdi mdi-home-map-marker"></i
-                  >The Village,Jersey City,NJ 07302,USA
-                </h6>
-                <div class="review-block-rate">
-                  <i class="mdi mdi-star"></i
-                  ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><i class="mdi mdi-star-outline"></i
-                ><span
-                  class="badge-pill badge-success ml-2"
-                >3.2</span
-                >
-                </div>
-                <h2 class="text-success mb-0 mt-3">
-                  $356,000 <small>/month</small>
-                </h2>
-              </div>
-              <div class="card-footer">
-                                    <span
-                                    ><i class="mdi mdi-sofa"></i
-                                    >Beds:<strong>1</strong></span
-                                    ><span
-              ><i class="mdi mdi-scale-bathroom"></i
-              >Baths:<strong>3</strong></span
-              ><span
-              ><i
-                class="mdi mdi-move-resize-variant"
-              ></i
-              >Area:<strong>187 sq ft</strong></span
-              >
-              </div>
-            </a
-            >
-          </div>
-        </div>
+        <single-block></single-block>
+        <single-block></single-block>
+        <single-block></single-block>
       </div>
     </div>
   </section>
@@ -875,12 +373,17 @@
     </div>
   </section>
   <!-- End Join Team -->
-
 </template>
 
 
 <script>
+import SingleBlock from '@/components/SingleBlock.vue'
+import NavBar from '@/components/NavBar.vue'
 export default {
   name: 'HomeView',
+  components: {
+    SingleBlock,
+    NavBar
+  },
 }
 </script>

@@ -60,6 +60,7 @@ export default {
       loginEmail: '',
       loginPassword: '',
       loginStatus: null,
+      userType: null,
     }
   },
   methods: {
@@ -75,6 +76,7 @@ export default {
         if (response.data.success) {
           // {'success': True}
           this.loginStatus = true
+          this.userType = response.data['user-type']
         } else {
           this.loginStatus = false
           alert('Incorrect email or password. Please try again.')
