@@ -81,10 +81,10 @@
         <div class="my-2 my-lg-0">
           <ul class="list-inline main-nav-right">
             <li class="list-inline-item">
-              <router-link to="/login" class="btn btn-link btn-sm">Login</router-link>
+              <router-link to="/login/" class="btn btn-link btn-sm">Login</router-link>
             </li>
             <li class="list-inline-item">
-              <a class="btn btn-success btn-sm" href="#">Sign Up</a>
+              <router-link to="/register/" class="btn btn-success btn-sm">Sign Up</router-link>
             </li>
           </ul>
         </div>

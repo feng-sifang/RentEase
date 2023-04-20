@@ -35,14 +35,7 @@
               </form>
               <div class="mt-4 text-center">
                 Don't have an account?
-                <a href="#">Register</a>
-              </div>
-              <div class="mt-4 text-center login-with-social">
-                <div class="mt-4 text-center">
-                  <a
-                    href="#"
-                  >Forget your password?</a>
-                </div>
+                <router-link to="/register/">Register</router-link>
               </div>
             </div>
           </div>
