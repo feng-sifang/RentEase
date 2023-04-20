@@ -7,11 +7,18 @@ fake = Faker()
 
 
 class Users(models.Model):
+    RENTER = 'renter'
+    AGENT = 'agent'
+    USER_TYPE_ = [
+        (RENTER, 'Renter'),
+        (AGENT, 'Agent')
+    ]
+
     user_id = models.AutoField(primary_key=True)
     user_email = models.CharField(max_length=20)
     user_last_name = models.CharField(max_length=20)
     user_first_name = models.CharField(max_length=20)
-    user_type = models.CharField(max_length=10)
+    user_type = models.TextField(choices=USER_TYPE_, default=RENTER)
     user_password = models.CharField(max_length=20)
     user_total_cost = models.DecimalField(max_digits=20, decimal_places=2)
 
@@ -22,6 +29,7 @@ class Users(models.Model):
     > from dj_backend.models import Users
     > Users.generate_fake_data(10)
     """
+
     @classmethod
     def generate_fake_data(cls, n):
         for i in range(n):
