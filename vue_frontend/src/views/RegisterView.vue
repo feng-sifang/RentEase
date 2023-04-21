@@ -84,7 +84,7 @@ export default {
       lastName: '',
       email: '',
       password: '',
-      userType: '',
+      userType: 'Renter',
     }
   },
   methods: {
