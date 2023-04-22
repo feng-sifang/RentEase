@@ -1,7 +1,7 @@
 <template>
   <header>
     <!-- Navbar -->
-    <nav-bar v-if="isLoginChecked" :userInfo="parentUserInfo"></nav-bar>
+    <nav-bar></nav-bar>
   </header>
   <!-- End Navbar -->
   <!-- Main Slider With Form -->
@@ -359,47 +359,9 @@
 <script>
 import SingleBlock from '@/components/SingleBlock.vue'
 import NavBar from '@/components/NavBar.vue'
-import axios from 'axios'
 
 export default {
   name: 'HomeView',
-
-  data () {
-    return {
-      isLoginChecked: false,
-      parentUserInfo: {
-        isLoggedIn: false,
-        userFirstName: '',
-        userType: '',
-      },
-    }
-  },
-
-  methods: {
-    async checkLogin () {
-      try {
-        const response = await axios.get('/check-login/')
-        if (response.data.success) {
-          // if returned data is true, means user is logged in
-          this.parentUserInfo.isLoggedIn = response.data['is_logged_in']
-          this.parentUserInfo.userFirstName = response.data['user_first_name']
-          this.parentUserInfo.userType = response.data['user_type']
-          console.log(response.data)
-        } else {
-          // not logged in
-          console.log(response.data)
-        }
-        this.isLoginChecked = true
-
-      } catch (error) {
-        console.error('An error occurred:', error)
-      }
-    },
-  },
-
-  mounted () {
-    this.checkLogin()
-  },
 
   components: {
     SingleBlock,

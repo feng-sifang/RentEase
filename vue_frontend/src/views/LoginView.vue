@@ -9,13 +9,13 @@
               <form>
                 <div class="form-group">
                   <!-- "for" attribute connect to the input's id can help to locate to input even when user click label -->
-                  <label for="login-email">Email Address<span class="text-danger">*</span></label>
+                  <label for="login-email">Email Address <span class="text-danger">*</span></label>
                   <input
                     type="email" class="form-control" name="login-email" id="login-email"
                     placeholder="Enter Email Address" v-model="loginEmail"/>
                 </div>
                 <div class="form-group">
-                  <label for="login-password">Password<span class="text-danger">*</span></label>
+                  <label for="login-password">Password <span class="text-danger">*</span></label>
                   <input
                     type="password" class="form-control" name="login-password" id="login-password"
                     placeholder="Enter Password" v-model="loginPassword"/>
