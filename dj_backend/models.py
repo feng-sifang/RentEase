@@ -7,22 +7,18 @@ from faker import Faker
 fake = Faker()
 
 
-class Users(models.Model):
+class Users(User):
     RENTER = 'renter'
     AGENT = 'agent'
-    USER_TYPE_ = [
+    USER_TYPE = [
         (RENTER, 'Renter'),
         (AGENT, 'Agent')
     ]
-
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE, to_field='id', primary_key=True)
-    user_email = models.CharField(max_length=20)
-    user_last_name = models.CharField(max_length=20)
-    user_first_name = models.CharField(max_length=20)
-    user_type = models.TextField(choices=USER_TYPE_, default=RENTER)
-    user_password = models.CharField(max_length=20)
-    user_total_cost = models.DecimalField(max_digits=20, decimal_places=2)
-
+    user_type = models.TextField(choices=USER_TYPE, default=RENTER)
+    total_cost = models.DecimalField(max_digits=20, decimal_places=2)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    location = models.CharField(max_length=100, blank=True, null=True)
+    about_me = models.TextField(blank=True, null=True)
     """
     To use Faker to generate fake data, run the following command in the terminal:
     
@@ -40,14 +36,14 @@ class Users(models.Model):
                 user_first_name=fake.first_name(),
                 user_type=fake.random_element(elements=('renter', 'agent')),
                 user_password=fake.password(),
-                user_total_cost=fake.random_int(min=0, max=1000000)
+                total_cost=fake.random_int(min=0, max=1000000)
             )
             user_profile.save()
 
 
 class Renters(models.Model):
     # use to_filed to specify the foreign key to the primary key (user_id) of the user profile
-    user_id = models.OneToOneField(Users, on_delete=models.CASCADE, primary_key=True, to_field='user_id')
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE, to_field='id', primary_key=True)
     renter_rental_preferences = models.CharField(max_length=100)
     renter_desired_move_in_date = models.DateField()
     renter_preferred_location = models.CharField(max_length=100)
@@ -63,7 +59,7 @@ class Property(models.Model):
     property_address = models.CharField(max_length=100)
     property_price = models.FloatField()
     property_availability = models.BooleanField()
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE, to_field='user_id')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
 
 
 class CreditCard(models.Model):
@@ -76,7 +72,7 @@ class CreditCard(models.Model):
     credit_card_city = models.CharField(max_length=20)
     credit_card_zip = models.IntegerField()
     credit_card_country = models.CharField(max_length=20)
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE, to_field='user_id')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
 
 
 class Booking(models.Model):
@@ -96,7 +92,7 @@ class Booking(models.Model):
 
 class UserAddress(models.Model):
     user_address_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE, to_field='user_id')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
 
     user_address_street = models.CharField(max_length=20)
     user_address_city = models.CharField(max_length=20)
@@ -112,12 +108,12 @@ class UserAddress(models.Model):
 
 class RewardRecord(models.Model):
     reward_record_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE, to_field='user_id')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
     property_id = models.ForeignKey(Property, on_delete=models.CASCADE, to_field='property_id')
 
 
 class Agents(models.Model):
-    user_id = models.OneToOneField(Users, on_delete=models.CASCADE, to_field='user_id', primary_key=True)
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE, to_field='id', primary_key=True)
     agent_job_title = models.CharField(max_length=20)
     agent_company = models.CharField(max_length=20)
     agent_contact_information = models.CharField(max_length=20)

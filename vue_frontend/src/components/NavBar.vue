@@ -125,10 +125,9 @@ export default {
 
   methods: {
     async checkLogin () {
-      const response = (await this.axios.get('/check-login/')).data
+      const response = (await this.axios.get('/get-user-profile/')).data
       this.displayUserName = !!response['is_logged_in']
-      this.userFirstName = response['user_first_name']
-      console.log(response)
+      this.userFirstName = response['first_name']
       this.waitCheckLogin = true
     },
   },
