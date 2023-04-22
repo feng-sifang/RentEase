@@ -20,7 +20,7 @@
               Favorite Properties
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="this.userType==='Agent'">
             <a class="nav-link" href="#">
               Add Property
             </a>
@@ -34,5 +34,22 @@
 <script>
 export default {
   name: 'UserSideBar',
+
+  data () {
+    return {
+      userType: '',
+    }
+  },
+
+  methods: {
+    async checkUserType() {
+      const response = await this.axios.get('/get-user-profile/');
+      this.userType = response.data['user_type'];
+    },
+  },
+
+  async mounted () {
+    await this.checkUserType();
+  }
 }
 </script>

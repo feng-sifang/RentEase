@@ -5,7 +5,7 @@
       <div class="row align-items-center mt-2 mb-5 pb-4">
         <div class="col">
           <!-- Heading -->
-          <h1 class="text-white mb-2">Renter Profile</h1>
+          <h1 class="text-white mb-2">{{ this.userType }} Profile</h1>
           <!-- Text -->
           <h6 class="font-weight-normal text-white-50 mb-0">
             Settings for
@@ -107,6 +107,7 @@ export default {
 
   data () {
     return {
+      userType: '',
       firstName: '',
       lastName: '',
       email: '',
@@ -133,11 +134,12 @@ export default {
         const response = (await this.axios.get('/get-user-profile/')).data
         if (response.success) {
           console.log('get:', response)
-          this.firstName = response.first_name
-          this.lastName = response.last_name
-          this.email = response.email
-          this.phone = response.phone
-          this.location = response.location
+          this.userType = response['user_type']
+          this.firstName = response['first_name']
+          this.lastName = response['last_name']
+          this.email = response['email']
+          this.phone = response['phone']
+          this.location = response['location']
           this.aboutMe = response['about_me']
         }
         console.log('User Profile', response)

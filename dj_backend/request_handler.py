@@ -67,7 +67,7 @@ def get_user_info(request):
         response = {
             "success": True,
             "is_logged_in": request.user.is_authenticated,
-            "type": user.user_type,
+            "user_type": user.user_type,
             
             "first_name": user.first_name,
             "last_name": user.last_name,
