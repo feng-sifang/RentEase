@@ -1,7 +1,7 @@
 <template>
   <header>
     <!-- Navbar -->
-    <nav-bar></nav-bar>
+    <nav-bar v-if="isLoginChecked" :userInfo="parentUserInfo"></nav-bar>
   </header>
   <!-- End Navbar -->
   <!-- Main Slider With Form -->
@@ -352,38 +352,58 @@
     </div>
   </section>
   <!-- End Trusted Agents -->
-  <!-- Join Team -->
-  <section class="py-5 bg-primary">
-    <div class="container">
-      <div class="row align-items-center text-center text-md-left">
-        <div class="col-md-8">
-          <h2 class="text-white my-2">
-            Join Our Professional Team & Agents
-          </h2>
-        </div>
-        <div class="col-md-4 text-center text-md-right">
-          <button type="button" class="btn btn-outline-light my-2">
-            Read More
-          </button>
-          <button type="button" class="btn btn-light my-2">
-            Contact Us
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- End Join Team -->
+
 </template>
 
 
 <script>
 import SingleBlock from '@/components/SingleBlock.vue'
 import NavBar from '@/components/NavBar.vue'
+import axios from 'axios'
+
 export default {
   name: 'HomeView',
+
+  data () {
+    return {
+      isLoginChecked: false,
+      parentUserInfo: {
+        isLoggedIn: false,
+        userFirstName: '',
+        userType: '',
+      },
+    }
+  },
+
+  methods: {
+    async checkLogin () {
+      try {
+        const response = await axios.get('/check-login/')
+        if (response.data.success) {
+          // if returned data is true, means user is logged in
+          this.parentUserInfo.isLoggedIn = response.data['is_logged_in']
+          this.parentUserInfo.userFirstName = response.data['user_first_name']
+          this.parentUserInfo.userType = response.data['user_type']
+          console.log(response.data)
+        } else {
+          // not logged in
+          console.log(response.data)
+        }
+        this.isLoginChecked = true
+
+      } catch (error) {
+        console.error('An error occurred:', error)
+      }
+    },
+  },
+
+  mounted () {
+    this.checkLogin()
+  },
+
   components: {
     SingleBlock,
-    NavBar
+    NavBar,
   },
 }
 </script>

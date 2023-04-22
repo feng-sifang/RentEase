@@ -16,29 +16,28 @@
               id="navbarDropdownPortfolio"
               data-toggle="dropdown"
               aria-haspopup="true"
-              aria-expanded="false"
-            >
+              aria-expanded="false">
               Agency
             </a>
             <div
               class="dropdown-menu"
-              aria-labelledby="navbarDropdownPortfolio"
-            >
+              aria-labelledby="navbarDropdownPortfolio">
               <a
                 class="dropdown-item"
-                href="#"
-              >Agency List</a>
+                href="#">
+                Agency List
+              </a>
               <a
                 class="dropdown-item"
-                href="#"
-              >Agency Profile</a>
-              <a
-                class="dropdown-item" href="#"
-              >Agents</a>
-              <a
-                class="dropdown-item"
-                href="#"
-              >Agent Profile</a>
+                href="#">
+                Agency Profile
+              </a>
+              <a class="dropdown-item" href="#">
+                Agents
+              </a>
+              <a class="dropdown-item" href="#">
+                Agent Profile
+              </a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -48,37 +47,48 @@
               id="navbarDropdownPortfolio"
               data-toggle="dropdown"
               aria-haspopup="true"
-              aria-expanded="false"
-            >My Account
+              aria-expanded="false">
+              My Account
             </a>
             <div
               class="dropdown-menu"
-              aria-labelledby="navbarDropdownPortfolio"
-            >
+              aria-labelledby="navbarDropdownPortfolio">
               <a
                 class="dropdown-item"
-                href="#"
-              >User Profile</a>
+                href="#">
+                User Profile
+              </a>
               <a
                 class="dropdown-item"
-                href="#"
-              >Social Profiles</a>
+                href="#">
+                Social Profiles
+              </a>
               <a
                 class="dropdown-item"
-                href="#"
-              >My Properties</a>
+                href="#">
+                My Properties
+              </a>
               <a
                 class="dropdown-item"
-                href="#"
-              >Favorite Properties</a>
+                href="#">
+                Favorite Properties
+              </a>
               <a
                 class="dropdown-item"
-                href="#"
-              >Add Property</a>
+                href="#">
+                Add Property
+              </a>
             </div>
           </li>
         </ul>
-        <div class="my-2 my-lg-0">
+        <div v-if="displayUserName" class="my-2 my-lg-0">
+          <ul class="list-inline main-nav-right">
+            <li class="list-inline-item">
+              <router-link to="#" class="btn btn-link btn-sm">Hi, {{ userInfo.userFirstName }}</router-link>
+            </li>
+          </ul>
+        </div>
+        <div v-else class="my-2 my-lg-0">
           <ul class="list-inline main-nav-right">
             <li class="list-inline-item">
               <router-link to="/login/" class="btn btn-link btn-sm">Login</router-link>
@@ -96,5 +106,33 @@
 <script>
 export default {
   name: 'NavBar',
+
+  data () {
+    return {
+      displayUserName: false,
+    }
+  },
+
+  props: {
+    userInfo: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+
+  methods: {
+    async loginCheck () {
+      console.log('loginCheck')
+      if (this.userInfo.isLoggedIn) {
+        this.displayUserName = true
+      }
+    },
+  },
+
+  // check if data is passed from parent component
+  mounted () {
+    this.loginCheck()
+    console.log(this.userInfo)
+  },
 }
 </script>

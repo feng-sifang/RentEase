@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.constraints import UniqueConstraint
+from django.contrib.auth.models import User
 
 from faker import Faker
 
@@ -14,7 +15,7 @@ class Users(models.Model):
         (AGENT, 'Agent')
     ]
 
-    user_id = models.AutoField(primary_key=True)
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE, to_field='id', primary_key=True)
     user_email = models.CharField(max_length=20)
     user_last_name = models.CharField(max_length=20)
     user_first_name = models.CharField(max_length=20)

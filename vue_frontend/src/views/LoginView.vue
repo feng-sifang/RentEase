@@ -48,34 +48,33 @@
 <script>
 export default {
   name: 'LoginView',
+
   data () {
     return {
       loginEmail: '',
       loginPassword: '',
-      loginStatus: null,
-      userType: null,
     }
   },
+
   methods: {
     async loginCheck (event) {
       event.preventDefault()
       const data = {
-        'login-email': this.loginEmail,
-        'login-password': this.loginPassword,
+        'login_email': this.loginEmail,
+        'login_password': this.loginPassword,
       }
       try {
         const response = await this.axios.post('/post-signin/', data)
 
         if (response.data.success) {
           // {'success': True}
-          this.loginStatus = true
-          this.userType = response.data['user-type']
+          // login success
+          // goto home page
+          this.$router.push('/')
         } else {
-          this.loginStatus = false
           alert('Incorrect email or password. Please try again.')
         }
       } catch (error) {
-        this.loginStatus = false
         console.error(error)
       }
     },
