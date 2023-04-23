@@ -10,7 +10,9 @@
 
   <body>
     {% block body %}
-      <div id="app"></div>
+      <div id="app">
+        {%  csrf_token %}
+      </div>
     {% endblock %}
   </body>
 
