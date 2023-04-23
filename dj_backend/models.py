@@ -41,9 +41,7 @@ class Users(User):
             user_profile.save()
 
 
-class Renters(models.Model):
-    # use to_filed to specify the foreign key to the primary key (user_id) of the user profile
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE, to_field='id', primary_key=True)
+class Renters(Users):
     renter_rental_preferences = models.CharField(max_length=100)
     renter_desired_move_in_date = models.DateField()
     renter_preferred_location = models.CharField(max_length=100)
@@ -76,7 +74,7 @@ class CreditCard(models.Model):
 
 
 class Booking(models.Model):
-    user_id = models.ForeignKey(Renters, on_delete=models.CASCADE, to_field='user_id')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
     property_id = models.ForeignKey(Property, on_delete=models.CASCADE, to_field='property_id')
     credit_card_id = models.ForeignKey(CreditCard, on_delete=models.CASCADE, to_field='credit_card_id')
 
@@ -112,8 +110,7 @@ class RewardRecord(models.Model):
     property_id = models.ForeignKey(Property, on_delete=models.CASCADE, to_field='property_id')
 
 
-class Agents(models.Model):
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE, to_field='id', primary_key=True)
+class Agents(Users):
     agent_job_title = models.CharField(max_length=20)
     agent_company = models.CharField(max_length=20)
     agent_contact_information = models.CharField(max_length=20)
@@ -126,27 +123,22 @@ class Neighborhood(models.Model):
     nearby_schools = models.CharField(max_length=100)
 
 
-class House(models.Model):
-    property_id = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
+class House(Property):
     num_of_rooms = models.IntegerField()
 
 
-class Apartment(models.Model):
-    property_id = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
+class Apartment(Property):
     num_of_rooms = models.IntegerField()
     building_type = models.CharField(max_length=20)
 
 
-class CommercialBuilding(models.Model):
-    property_id = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
+class CommercialBuilding(Property):
     business_type = models.CharField(max_length=20)
 
 
-class Land(models.Model):
-    property_id = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
+class Land(Property):
     land_size = models.FloatField()
 
 
-class VacationHome(models.Model):
-    property_id = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
+class VacationHome(Property):
     characteristics = models.CharField(max_length=20)
