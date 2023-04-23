@@ -12,11 +12,4 @@ app.use(router)
 app.use(VueAxios, axios)
 app.mount('#app')
 
-// add global variable， this may cause coupling
-// if you want to avoid coupling, you can use vuex
-// but now for convenience, we use this method
-app.config.globalProperties.$isUserLoggedIn = false
-app.config.globalProperties.$userFirstName = ''
-app.config.globalProperties.$userEmail = ''
-app.config.globalProperties.$userType = ''
 

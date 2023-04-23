@@ -1,3 +1,5 @@
+from random import choice
+
 from django.db import models
 from django.db.models.constraints import UniqueConstraint
 from django.contrib.auth.models import User
@@ -18,7 +20,6 @@ class Users(User):
     total_cost = models.DecimalField(max_digits=20, decimal_places=2)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
-    about_me = models.TextField(blank=True, null=True)
     """
     To use Faker to generate fake data, run the following command in the terminal:
     
@@ -42,10 +43,10 @@ class Users(User):
 
 
 class Renters(Users):
-    renter_rental_preferences = models.CharField(max_length=100)
-    renter_desired_move_in_date = models.DateField()
-    renter_preferred_location = models.CharField(max_length=100)
-    renter_budget = models.FloatField()
+    rental_preferences = models.CharField(max_length=100)
+    desired_move_in_date = models.DateField()
+    preferred_location = models.CharField(max_length=100)
+    budget = models.FloatField()
 
 
 class Property(models.Model):
@@ -59,17 +60,35 @@ class Property(models.Model):
     property_availability = models.BooleanField()
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
 
+    @classmethod
+    def generate_fake_data(cls, n):
+        for i in range(n):
+            all_users = Users.objects.all()
+            random_user = choice(all_users)
+
+            model_profile = cls(
+                property_type=fake.random_element(elements=('House', 'Apartment', 'Commercial Building')),
+                property_description=fake.text(),
+                property_city=fake.city(),
+                property_state=fake.state(),
+                property_address=fake.address(),
+                property_price=fake.random_int(min=100, max=10000),
+                property_availability=fake.random_element(elements=('True', 'False')),
+                user_id=random_user
+            )
+            model_profile.save()
+
 
 class CreditCard(models.Model):
     credit_card_id = models.AutoField(primary_key=True)
-    credit_card_number = models.CharField(max_length=20)
-    credit_card_holder_name = models.CharField(max_length=20)
-    credit_card_expiry_date = models.DateField()
-    credit_card_cvv = models.IntegerField()
-    credit_card_street = models.CharField(max_length=20)
-    credit_card_city = models.CharField(max_length=20)
-    credit_card_zip = models.IntegerField()
-    credit_card_country = models.CharField(max_length=20)
+    number = models.CharField(max_length=20)
+    holder_name = models.CharField(max_length=20)
+    expiry_date = models.DateField()
+    cvv = models.IntegerField()
+    street = models.CharField(max_length=20)
+    city = models.CharField(max_length=20)
+    zip = models.IntegerField()
+    country = models.CharField(max_length=20)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
 
 
@@ -78,9 +97,9 @@ class Booking(models.Model):
     property_id = models.ForeignKey(Property, on_delete=models.CASCADE, to_field='property_id')
     credit_card_id = models.ForeignKey(CreditCard, on_delete=models.CASCADE, to_field='credit_card_id')
 
-    booking_start_date = models.DateField()
-    booking_end_date = models.DateField()
-    booking_total_cost = models.DecimalField(max_digits=20, decimal_places=2)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    total_cost = models.DecimalField(max_digits=20, decimal_places=2)
 
     class Meta:
         constraints = [
@@ -92,11 +111,11 @@ class UserAddress(models.Model):
     user_address_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
 
-    user_address_street = models.CharField(max_length=20)
-    user_address_city = models.CharField(max_length=20)
-    user_address_state = models.CharField(max_length=20)
-    user_address_zip = models.IntegerField()
-    user_address_country = models.CharField(max_length=20)
+    street = models.CharField(max_length=20)
+    city = models.CharField(max_length=20)
+    state = models.CharField(max_length=20)
+    zip = models.IntegerField()
+    country = models.CharField(max_length=20)
 
     class Meta:
         constraints = [
@@ -111,9 +130,9 @@ class RewardRecord(models.Model):
 
 
 class Agents(Users):
-    agent_job_title = models.CharField(max_length=20)
-    agent_company = models.CharField(max_length=20)
-    agent_contact_information = models.CharField(max_length=20)
+    job_title = models.CharField(max_length=20)
+    company = models.CharField(max_length=20)
+    contact_information = models.CharField(max_length=20)
 
 
 class Neighborhood(models.Model):

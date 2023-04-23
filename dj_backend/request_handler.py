@@ -1,10 +1,12 @@
 import json
+
+from django.db.models import Count
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from dj_backend.models import Users
+from dj_backend.models import Users, Property
 
 
 def post_signin(request):
@@ -68,7 +70,7 @@ def get_user_info(request):
             "success": True,
             "is_logged_in": request.user.is_authenticated,
             "user_type": user.user_type,
-            
+
             "first_name": user.first_name,
             "last_name": user.last_name,
             "email": user.email,
@@ -96,3 +98,20 @@ def save_user_profile(request):
         return JsonResponse({"success": True})
     else:
         return JsonResponse({"success": False})
+
+
+def property_side_card(request):
+    grouped_by_type = Property.objects.values('property_type').annotate(total_count=Count('property_id'))
+    grouped_by_city = Property.objects.values('property_city').annotate(total_count=Count('property_id'))
+    grouped_by_availability = Property.objects.values('property_availability').annotate(
+        total_count=Count('property_id'))
+
+    type_data = list(grouped_by_type)
+    city_data = list(grouped_by_city)
+    availability_data = list(grouped_by_availability)
+
+    return JsonResponse({
+        'type_data': type_data,
+        'city_data': city_data,
+        'availability_data': availability_data,
+    })
