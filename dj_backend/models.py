@@ -1,3 +1,5 @@
+from random import choice
+
 from django.db import models
 from django.db.models.constraints import UniqueConstraint
 
@@ -53,8 +55,28 @@ class Property(models.Model):
     property_state = models.CharField(max_length=20)
     property_address = models.CharField(max_length=100)
     property_price = models.FloatField()
-    property_availability = models.BooleanField()
+    property_availability = models.BooleanField(default=True)
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE, to_field='user_id')
+    from random import choice
+
+    @classmethod
+    def generate_fake_data(cls, n):
+        for i in range(n):
+            all_users = Users.objects.all()
+
+            random_user = choice(all_users)
+
+            model_profile = cls(
+                property_type=fake.random_element(elements=('House', 'Apartment', 'Commercial Building')),
+                property_description=fake.text(),
+                property_city=fake.city(),
+                property_state=fake.state(),
+                property_address=fake.address(),
+                property_price=fake.random_int(min=100, max=10000),
+                property_availability=fake.random_element(elements=('True', 'False')),
+                user_id=random_user
+            )
+            model_profile.save()
 
 
 class CreditCard(models.Model):
@@ -121,27 +143,27 @@ class Neighborhood(models.Model):
     nearby_schools = models.CharField(max_length=100)
 
 
-class House(models.Model):
-    property_id = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
+class House(Property):
+    # property_ptr = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
     num_of_rooms = models.IntegerField()
 
 
-class Apartment(models.Model):
-    property_id = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
+class Apartment(Property):
+    # property_ptr = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
     num_of_rooms = models.IntegerField()
     building_type = models.CharField(max_length=20)
 
 
-class CommercialBuilding(models.Model):
-    property_id = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
+class CommercialBuilding(Property):
+    # property_ptr = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
     business_type = models.CharField(max_length=20)
 
 
-class Land(models.Model):
-    property_id = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
+class Land(Property):
+    # property_ptr = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
     land_size = models.FloatField()
 
 
-class VacationHome(models.Model):
-    property_id = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
+class VacationHome(Property):
+    # property_ptr = models.OneToOneField(Property, on_delete=models.CASCADE, to_field='property_id', primary_key=True)
     characteristics = models.CharField(max_length=20)

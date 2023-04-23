@@ -178,3 +178,4 @@ cython_debug/
 
 /vue_frontend/node_modules/
 /static/
+/dj_backend/migrations/

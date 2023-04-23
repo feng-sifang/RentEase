@@ -1,4 +1,5 @@
 <template>
+  <TopPart />
   <section class="hv-100">
     <div class="container hv-100">
       <div class="row align-items-center hv-100">
@@ -53,8 +54,11 @@
 </template>
 
 <script>
+import TopPart from "@/components/TopPart.vue";
+
 export default {
   name: 'LoginView',
+  components: {TopPart},
   data () {
     return {
       loginEmail: '',

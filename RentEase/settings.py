@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dj_backend.apps.DjBackendConfig',
+    'rest_framework',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
