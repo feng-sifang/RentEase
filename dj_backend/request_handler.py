@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from dj_backend.models import Users, Property
+from dj_backend.models import Users, Property, Renters, Agents
 
 
 def post_signin(request):
@@ -33,23 +33,36 @@ def post_register(request):
     user_password = data["password"]
     user_type = data["user_type"]
 
-    print(data)
     if Users.objects.filter(email__exact=user_email):
         response = {
             "success": False
         }
     else:
-        # create a new user in the official django user table
-        user = Users.objects.create_user(
-            username=user_email,
-            email=user_email,
-            last_name=user_last_name,
-            first_name=user_first_name,
-            password=user_password,
-            user_type=user_type,
-            total_cost=0
-        )
-        user.save()
+        if user_type == "Renter":
+            # create a new user in the official django user table
+            renter = Renters.objects.create_user(
+                username=user_email,
+                email=user_email,
+                last_name=user_last_name,
+                first_name=user_first_name,
+                password=user_password,
+                user_type=user_type,
+                budget=0,
+                desired_move_in_date="2020-01-01",
+                total_cost=0
+            )
+            renter.save()
+
+        elif user_type == "Agent":
+            agent = Agents.objects.create_user(
+                username=user_email,
+                email=user_email,
+                last_name=user_last_name,
+                first_name=user_first_name,
+                password=user_password,
+                user_type=user_type,
+            )
+            agent.save()
 
         response = {
             "success": True
@@ -66,19 +79,39 @@ def logout_handler(request):
 def get_user_info(request):
     if request.user.is_authenticated:
         user = Users.objects.get(id=request.user.id)
+        # response with common information
         response = {
             "success": True,
-            "is_logged_in": request.user.is_authenticated,
+            "is_logged_in": True,
             "user_type": user.user_type,
-
             "first_name": user.first_name,
             "last_name": user.last_name,
             "email": user.email,
             "phone": user.phone_number,
             "location": user.location,
-            "about_me": user.about_me,
-            "total_cost": user.total_cost,
         }
+        if user.user_type == "Renter":
+
+            renter = Renters.objects.get(users_ptr_id=request.user.id)
+            response = {
+                **response,
+                "rental_preferences": renter.rental_preferences,
+                "desired_move_in_date": renter.desired_move_in_date,
+                "preferred_location": renter.preferred_location,
+                "budget": renter.budget,
+                "total_cost": renter.total_cost,
+            }
+
+        elif user.user_type == "Agent":
+
+            agent = Agents.objects.get(users_ptr_id=request.user.id)
+            response = {
+                **response,
+                "job_title": agent.job_title,
+                "company": agent.company,
+                "contact_information": agent.contact_information,
+            }
+
         return JsonResponse(response)
     else:
         return JsonResponse({"success": False})
@@ -93,9 +126,27 @@ def save_user_profile(request):
         user.email = data["email"]
         user.phone_number = data["phone"]
         user.location = data["location"]
-        user.about_me = data["about_me"]
         user.save()
+
+        if user.user_type == "Renter":
+            renter = Renters.objects.get(users_ptr_id=user.id)
+            renter.rental_preferences = data["rental_preferences"]
+            renter.desired_move_in_date = data["desired_move_in_date"]
+            renter.preferred_location = data["preferred_location"]
+            renter.budget = data["budget"]
+
+            renter.save()
+
+        elif user.user_type == "Agent":
+            agent = Agents.objects.get(users_ptr_id=user.id)
+            agent.job_title = data["job_title"]
+            agent.company = data["company"]
+            agent.contact_information = data["contact_information"]
+
+            agent.save()
+
         return JsonResponse({"success": True})
+
     else:
         return JsonResponse({"success": False})
 

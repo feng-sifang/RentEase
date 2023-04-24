@@ -10,14 +10,19 @@
             <a class="nav-link active text-success" href="">
               User Profile</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              My Properties
-            </a>
-          </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="this.userType==='Renter'">
             <a class="nav-link" href="#">
               Favorite Properties
+            </a>
+          </li>
+          <li class="nav-item" v-if="this.userType==='Renter'">
+            <a class="nav-link" href="#">
+              Add Credit Card
+            </a>
+          </li>
+          <li class="nav-item" v-if="this.userType==='Renter'">
+            <a class="nav-link" href="#">
+              Reword Points
             </a>
           </li>
           <li class="nav-item" v-if="this.userType==='Agent'">

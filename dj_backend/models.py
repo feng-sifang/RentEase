@@ -17,7 +17,6 @@ class Users(User):
         (AGENT, 'Agent')
     ]
     user_type = models.TextField(choices=USER_TYPE, default=RENTER)
-    total_cost = models.DecimalField(max_digits=20, decimal_places=2)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     """
@@ -37,7 +36,6 @@ class Users(User):
                 user_first_name=fake.first_name(),
                 user_type=fake.random_element(elements=('renter', 'agent')),
                 user_password=fake.password(),
-                total_cost=fake.random_int(min=0, max=1000000)
             )
             user_profile.save()
 
@@ -47,6 +45,24 @@ class Renters(Users):
     desired_move_in_date = models.DateField()
     preferred_location = models.CharField(max_length=100)
     budget = models.FloatField()
+    total_cost = models.DecimalField(max_digits=20, decimal_places=2)
+
+    @classmethod
+    def generate_fake_data(cls, n):
+        for i in range(n):
+            renter_profile = cls(
+                user_email=fake.email(),
+                user_last_name=fake.last_name(),
+                user_first_name=fake.first_name(),
+                user_type=fake.random_element(elements=('renter', 'agent')),
+                user_password=fake.password(),
+                rental_preferences=fake.text(),
+                desired_move_in_date=fake.date(),
+                preferred_location=fake.address(),
+                budget=fake.random_int(min=0, max=1000000),
+                total_cost=fake.random_int(min=0, max=1000000)
+            )
+            renter_profile.save()
 
 
 class Property(models.Model):
