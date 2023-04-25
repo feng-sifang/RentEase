@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.forms.models import model_to_dict
 from dj_backend.models import Users, Property, Renters, Agents, CreditCard
+from datetime import datetime
 
 
 def post_signin(request):
@@ -46,7 +47,7 @@ def post_register(request):
                 password=user_password,
                 user_type=user_type,
                 budget=0,
-                desired_move_in_date="2020-01-01",
+                desired_move_in_date="",
                 total_cost=0
             )
             renter.save()
@@ -172,6 +173,28 @@ def get_user_creditcard(request):
         credit_cards = CreditCard.objects.filter(user_id_id=request.user.id)
         credit_cards_list = [model_to_dict(card) for card in credit_cards]
 
+        if len(credit_cards_list) == 0:
+            return JsonResponse({"success": False})
         return JsonResponse({"success": True, "credit_cards": credit_cards_list}, safe=False)
     else:
         return JsonResponse({"success": False})
+
+
+def add_user_creditcard(request):
+    data = json.loads(request.body)
+    expiry_date = datetime.strptime(data['expiry_date'], '%Y-%m-%d').date()
+    print(data)
+    new_card = CreditCard.objects.create(
+        number=data['number'],
+        holder_name=data['holder_name'],
+        expiry_date=expiry_date,
+        cvv=data['cvv'],
+        street=data['street'],
+        city=data['city'],
+        zip=data['zip'],
+        country=data['country'],
+        user_id_id=request.user.id,
+    )
+    new_card.save()
+
+    return JsonResponse({"success": True})

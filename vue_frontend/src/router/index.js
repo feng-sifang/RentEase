@@ -38,7 +38,7 @@ const routes = [
     component: UserCreditCard,
   },
   {
-    path: '/add-credit-card/',
+    path: '/user-add-creditcard/',
     component: AddCreditCard,
   }
 ]

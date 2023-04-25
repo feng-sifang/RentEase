@@ -28,7 +28,7 @@
           <div class="form-group">
             <label>Expiry Date <span class="text-danger">*</span></label>
             <input
-              type="email"
+              type="text"
               class="form-control"
               v-model="creditCard['expiry_date']"
             />
@@ -36,7 +36,7 @@
           <div class="form-group">
             <label>CVV <span class="text-danger">*</span></label>
             <input
-              type="email"
+              type="text"
               class="form-control"
               v-model="creditCard['cvv']"
             />
@@ -44,7 +44,7 @@
           <div class="form-group">
             <label>Country <span class="text-danger">*</span></label>
             <input
-              type="email"
+              type="text"
               class="form-control"
               v-model="creditCard['country']"
             />
@@ -52,7 +52,7 @@
           <div class="form-group">
             <label>City <span class="text-danger">*</span></label>
             <input
-              type="email"
+              type="text"
               class="form-control"
               v-model="creditCard['city']"
             />
@@ -60,7 +60,7 @@
           <div class="form-group">
             <label>Street <span class="text-danger">*</span></label>
             <input
-              type="email"
+              type="text"
               class="form-control"
               v-model="creditCard['street']"
             />
@@ -68,7 +68,7 @@
           <div class="form-group">
             <label>ZIP <span class="text-danger">*</span></label>
             <input
-              type="email"
+              type="text"
               class="form-control"
               v-model="creditCard['zip']"
             />

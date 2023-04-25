@@ -16,13 +16,18 @@
               Favorite Properties
             </router-link>
           </li>
-          <li class="nav-item" v-if="this.userType==='Renter'">
+          <li class="nav-item" v-if="this.userType==='Renter' && this.ifCreditCard === true">
             <router-link to="/user-creditcard/" class="nav-link">
               Credit Card
             </router-link>
           </li>
           <li class="nav-item" v-if="this.userType==='Renter'">
-            <router-link to="user-reword" class="nav-link">
+            <router-link to="/user-add-creditcard/" class="nav-link">
+              Add Credit Card
+            </router-link>
+          </li>
+          <li class="nav-item" v-if="this.userType==='Renter'">
+            <router-link to="" class="nav-link">
               Reword Points
             </router-link>
           </li>
@@ -44,6 +49,7 @@ export default {
   data () {
     return {
       userType: '',
+      ifCreditCard: false,
     }
   },
 
@@ -52,10 +58,19 @@ export default {
       const response = await this.axios.get('/get-user-profile/')
       this.userType = response.data['user_type']
     },
+
+    async checkCreditCard () {
+      const response = await this.axios.get('/get-user-creditcard/')
+      if (response.data['success']) {
+        console.log(response.data)
+        this.ifCreditCard = true
+      }
+    },
   },
 
   async mounted () {
     await this.checkUserType()
+    await this.checkCreditCard()
   },
 }
 </script>

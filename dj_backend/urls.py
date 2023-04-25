@@ -8,8 +8,8 @@ urlpatterns = [
     path('login/',                         LoginView.as_view(), name='login'),
     path('register/',                      RegisterView.as_view(), name='register'),
     path('user-profile/',                  UserProfileView.as_view(), name='user_profile'),
-    path('user-creditcard/',              UserCreditCard.as_view(), name='user_credit_card'),
-    path('user-add-creditcard/',          UserAddCreditCard.as_view(), name='user_add_credit_card'),
+    path('user-creditcard/',               UserCreditCard.as_view(), name='user_credit_card'),
+    path('user-add-creditcard/',           UserAddCreditCard.as_view(), name='user_add_credit_card'),
     path('property/list/',                 PropertyList.as_view(), name='property_list'),
     path('property/find/',                 PropertyQueryAPIView.as_view(), name='property_find'),
     path('property/add/',                  PropertyAddView.as_view(), name='property_add'),
@@ -20,5 +20,6 @@ urlpatterns = [
     path('get-user-profile/',              get_user_profile, name='get_user_profile'),
     path('save-user-profile/',             save_user_profile, name='save_user_profile'),
     path('get-user-creditcard/',           get_user_creditcard, name='get_user_creditcard'),
+    path('add-user-creditcard/',           add_user_creditcard, name='add_user_creditcard'),
     path('property/side-card/',            property_side_card, name='property_side_card'),
 ]
