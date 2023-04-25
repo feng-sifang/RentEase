@@ -7,28 +7,29 @@
         <h6 class="text-uppercase mt-0 mb-3">Account</h6>
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link active text-success" href="">
-              User Profile</a>
+            <router-link to="/user-profile/" class="nav-link">
+              User Profile
+            </router-link>
           </li>
           <li class="nav-item" v-if="this.userType==='Renter'">
-            <a class="nav-link" href="#">
+            <router-link to="user-fav-prop" class="nav-link">
               Favorite Properties
-            </a>
+            </router-link>
           </li>
           <li class="nav-item" v-if="this.userType==='Renter'">
-            <a class="nav-link" href="#">
-              Add Credit Card
-            </a>
+            <router-link to="/user-creditcard/" class="nav-link">
+              Credit Card
+            </router-link>
           </li>
           <li class="nav-item" v-if="this.userType==='Renter'">
-            <a class="nav-link" href="#">
+            <router-link to="user-reword" class="nav-link">
               Reword Points
-            </a>
+            </router-link>
           </li>
           <li class="nav-item" v-if="this.userType==='Agent'">
-            <a class="nav-link" href="#">
+            <router-link to="" class="nav-link">
               Add Property
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -47,14 +48,14 @@ export default {
   },
 
   methods: {
-    async checkUserType() {
-      const response = await this.axios.get('/get-user-profile/');
-      this.userType = response.data['user_type'];
+    async checkUserType () {
+      const response = await this.axios.get('/get-user-profile/')
+      this.userType = response.data['user_type']
     },
   },
 
   async mounted () {
-    await this.checkUserType();
-  }
+    await this.checkUserType()
+  },
 }
 </script>

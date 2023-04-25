@@ -32,6 +32,14 @@ class PropertyList(TemplateView):
     template_name = 'property-list.html'
 
 
+class UserCreditCard(TemplateView):
+    template_name = 'user-creditcard.html'
+
+
+class UserAddCreditCard(TemplateView):
+    template_name = 'user-add-creditcard.html'
+
+
 class PropertyFindAPIView(CreateModelMixin, ListAPIView):
     queryset = Property.objects.all()
     serializer_class = PropertySerializer

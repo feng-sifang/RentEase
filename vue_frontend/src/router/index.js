@@ -5,6 +5,8 @@ import RegisterView from '../views/RegisterView.vue'
 import UserProfileView from '../views/UserProfileView.vue'
 import PropertyList from '../views/PropertyList.vue'
 import AddProperty from '../views/AddProperty.vue'
+import UserCreditCard from '../views/UserCreditCard.vue'
+import AddCreditCard from '@/views/AddCreditCard.vue'
 
 const routes = [
   {
@@ -24,13 +26,21 @@ const routes = [
     component: UserProfileView,
   },
   {
-    path: '/property-list',
+    path: '/property/list/',
     component: PropertyList,
   },
   {
-    path: '/add_property',
+    path: '/add-property/',
     component: AddProperty,
   },
+  {
+    path: '/user-creditcard/',
+    component: UserCreditCard,
+  },
+  {
+    path: '/add-credit-card/',
+    component: AddCreditCard,
+  }
 ]
 
 const router = createRouter({

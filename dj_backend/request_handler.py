@@ -3,10 +3,8 @@ import json
 from django.db.models import Count
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-
-from dj_backend.models import Users, Property, Renters, Agents
+from django.forms.models import model_to_dict
+from dj_backend.models import Users, Property, Renters, Agents, CreditCard
 
 
 def post_signin(request):
@@ -76,11 +74,12 @@ def logout_handler(request):
         return JsonResponse({"success": True})
 
 
-def get_user_info(request):
+def get_user_profile(request):
     if request.user.is_authenticated:
         user = Users.objects.get(id=request.user.id)
         # response with common information
         response = {
+            "user_id": user.id,
             "success": True,
             "is_logged_in": True,
             "user_type": user.user_type,
@@ -166,3 +165,13 @@ def property_side_card(request):
         'city_data': city_data,
         'availability_data': availability_data,
     })
+
+
+def get_user_creditcard(request):
+    if request.user.is_authenticated:
+        credit_cards = CreditCard.objects.filter(user_id_id=request.user.id)
+        credit_cards_list = [model_to_dict(card) for card in credit_cards]
+
+        return JsonResponse({"success": True, "credit_cards": credit_cards_list}, safe=False)
+    else:
+        return JsonResponse({"success": False})
