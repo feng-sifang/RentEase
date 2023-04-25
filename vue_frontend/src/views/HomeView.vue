@@ -64,7 +64,7 @@
       <div class="d-flex justify-content-center align-items-center">
         <div>
           <router-link
-            to="/property-list/"
+            to="/property/list/"
             type="submit"
             class="btn btn-success font-weight-bold"
             style="padding: 10px 200px;">

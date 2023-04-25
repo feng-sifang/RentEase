@@ -57,7 +57,7 @@ export default {
     const cityData = ref([])
     const fetchGroupedPropertyData = async () => {
       try {
-        const response = await instance.appContext.config.globalProperties.$http.get('/property/side_card/')
+        const response = await instance.appContext.config.globalProperties.$http.get('/property/side-card/')
         console.log(response.data)
         availabilityData.value = response.data.availability_data
         typeData.value = response.data.type_data
