@@ -27,7 +27,7 @@
             </router-link>
           </li>
           <li class="nav-item" v-if="this.userType==='Renter'">
-            <router-link to="" class="nav-link">
+            <router-link to="/reword-points/" class="nav-link">
               Reword Points
             </router-link>
           </li>

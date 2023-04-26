@@ -22,5 +22,6 @@ urlpatterns = [
     path('get-user-creditcard/',           get_user_creditcard, name='get_user_creditcard'),
     path('add-user-creditcard/',           add_user_creditcard, name='add_user_creditcard'),
     path('property/side-card/',            property_side_card, name='property_side_card'),
-    path('save-user-creditcard/',           save_user_creditcard, name='add_property'),
+    path('save-user-creditcard/',          save_user_creditcard, name='add_property'),
+    path('get-points/',                    get_points, name='get_points'),
 ]

@@ -11,6 +11,7 @@ import AddProperty from '../views/AddProperty.vue'
 import UserCreditCard from '../views/UserCreditCard.vue'
 import AddCreditCard from '@/views/AddCreditCard.vue'
 import MyBookingsView from '@/views/MyBookingsView.vue'
+import RewordPointsView from '@/views/RewordPointsView.vue'
 
 const routes = [
   {
@@ -48,6 +49,10 @@ const routes = [
   {
     path: '/my-bookings/',
     component: MyBookingsView,
+  },
+  {
+    path: '/reword-points/',
+    component: RewordPointsView,
   },
 ]
 

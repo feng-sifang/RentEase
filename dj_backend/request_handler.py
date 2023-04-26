@@ -215,3 +215,13 @@ def save_user_creditcard(request):
         card.save()
 
     return JsonResponse({"success": True})
+
+
+def get_points(request):
+    if request.user.is_authenticated:
+        user = Renters.objects.get(id=request.user.id)
+
+        return JsonResponse({"success": True, "total_points": int(user.total_cost)})
+    else:
+        return JsonResponse({"success": False})
+
