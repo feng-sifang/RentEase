@@ -12,7 +12,7 @@
             </router-link>
           </li>
           <li class="nav-item" v-if="this.userType==='Renter'">
-            <router-link to="user-fav-prop" class="nav-link">
+            <router-link to="/my-bookings/" class="nav-link">
               My Bookings
             </router-link>
           </li>

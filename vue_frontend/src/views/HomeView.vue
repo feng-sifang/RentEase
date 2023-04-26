@@ -258,10 +258,6 @@ import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'HomeView',
-
-  components: {
-    SingleBlock,
-    NavBar,
-  },
+  components: { SingleBlock, NavBar, },
 }
 </script>

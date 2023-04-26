@@ -179,6 +179,7 @@ import UserTopSection from '@/components/UserTopSection.vue'
 
 export default {
   name: 'UserProfileView',
+  components: { UserTopSection, UserSideBar, NavBar },
 
   data () {
     return {
@@ -253,12 +254,6 @@ export default {
         console.log(error)
       }
     },
-  },
-
-  components: {
-    UserTopSection,
-    UserSideBar,
-    NavBar,
   },
 
   async mounted () {
