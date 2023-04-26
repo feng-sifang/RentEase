@@ -198,3 +198,20 @@ def add_user_creditcard(request):
     new_card.save()
 
     return JsonResponse({"success": True})
+
+
+def save_user_creditcard(request):
+    data = json.loads(request.body)
+    for creditcard in data['creditCards']:
+        card = CreditCard.objects.get(credit_card_id=creditcard['credit_card_id'])
+        card.number = creditcard['number']
+        card.holder_name = creditcard['holder_name']
+        card.expiry_date = creditcard['expiry_date']
+        card.cvv = creditcard['cvv']
+        card.street = creditcard['street']
+        card.city = creditcard['city']
+        card.zip = creditcard['zip']
+        card.country = creditcard['country']
+        card.save()
+
+    return JsonResponse({"success": True})

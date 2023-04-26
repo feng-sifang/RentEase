@@ -76,7 +76,7 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-success">
+      <button type="submit" class="btn btn-success" @click="saveCreditCard">
         SAVE EDITS
       </button>
     </form>
@@ -114,6 +114,21 @@ export default {
         console.log('No. of credit cards: ', this.cardIndex)
       }
     },
+
+    async saveCreditCard () {
+      try {
+        const response = await this.axios.post('/save-user-creditcard/', { creditCards: this.creditCards })
+        if (response.data.success) {
+          alert('Credit card details have been saved successfully.')
+        } else {
+          alert('Failed to save credit card details. Please try again.')
+        }
+      } catch (error) {
+        console.error(error)
+        alert('Failed to save credit card details. Please try again.')
+      }
+    },
+
   },
 
   mounted () {
