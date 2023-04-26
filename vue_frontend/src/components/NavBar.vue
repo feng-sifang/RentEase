@@ -10,75 +10,12 @@
             <a class="nav-link" href="/">Home</a>
           </li>
           <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownPortfolio"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false">
-              Agency
-            </a>
-            <div
-              class="dropdown-menu"
-              aria-labelledby="navbarDropdownPortfolio">
-              <a
-                class="dropdown-item"
-                href="#">
-                Agency List
-              </a>
-              <a
-                class="dropdown-item"
-                href="#">
-                Agency Profile
-              </a>
-              <a class="dropdown-item" href="#">
-                Agents
-              </a>
-              <a class="dropdown-item" href="#">
-                Agent Profile
-              </a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownPortfolio"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false">
+            <router-link
+              to="/user-profile/"
+              class="nav-link"
+              id="navbarDropdownPortfolio">
               My Account
-            </a>
-            <div
-              class="dropdown-menu"
-              aria-labelledby="navbarDropdownPortfolio">
-              <a
-                class="dropdown-item"
-                href="/user-profile/">
-                User Profile
-              </a>
-              <a
-                class="dropdown-item"
-                href="#">
-                Social Profiles
-              </a>
-              <a
-                class="dropdown-item"
-                href="#">
-                My Properties
-              </a>
-              <a
-                class="dropdown-item"
-                href="#">
-                Favorite Properties
-              </a>
-              <a
-                class="dropdown-item"
-                href="#">
-                Add Property
-              </a>
-            </div>
+            </router-link>
           </li>
         </ul>
 
