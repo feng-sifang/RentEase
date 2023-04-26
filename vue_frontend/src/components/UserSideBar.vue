@@ -13,7 +13,7 @@
           </li>
           <li class="nav-item" v-if="this.userType==='Renter'">
             <router-link to="user-fav-prop" class="nav-link">
-              Favorite Properties
+              My Bookings
             </router-link>
           </li>
           <li class="nav-item" v-if="this.userType==='Renter' && this.ifCreditCard === true">
