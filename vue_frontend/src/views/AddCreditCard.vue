@@ -97,7 +97,6 @@ import UserSideBar from '@/components/UserSideBar.vue'
 
 export default {
   name: 'AddCreditCard',
-
   components: { UserSideBar, UserTopSection, NavBar },
 
   data () {

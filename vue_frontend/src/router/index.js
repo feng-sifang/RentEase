@@ -10,6 +10,7 @@ import PropertyList from '../views/PropertyList.vue'
 import AddProperty from '../views/AddProperty.vue'
 import UserCreditCard from '../views/UserCreditCard.vue'
 import AddCreditCard from '@/views/AddCreditCard.vue'
+import MyBookingsView from '@/views/MyBookingsView.vue'
 
 const routes = [
   {
@@ -43,6 +44,10 @@ const routes = [
   {
     path: '/user-add-creditcard/',
     component: AddCreditCard,
+  },
+  {
+    path: '/my-bookings/',
+    component: MyBookingsView,
   },
 ]
 
