@@ -32,11 +32,11 @@
                 <div class="input-group-addon"><i class="mdi mdi-home-modern"></i></div>
                 <select class="form-control select2" v-model="formData.property_type">
                   <option value="" selected disabled>Type</option>
-                  <option value="">House</option>
-                  <option value="">Apartment</option>
-                  <option value="">Commercial Building</option>
-                  <option value="">Land</option>
-                  <option value="">Vacation Home</option>
+                  <option>House</option>
+                  <option>Apartment</option>
+                  <option value="CommercialBuilding">Commercial Building</option>
+                  <option>Land</option>
+                  <option value="VacationHome">Vacation Home</option>
                 </select></div>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 col-6">
@@ -76,21 +76,11 @@
             <div class="col-lg-3 col-md-4 col-sm-6 col-6">
               <div class="input-group">
                 <div class="input-group-addon"><i class="mdi mdi-map-marker-multiple"></i></div>
-                <select class="form-control select2" v-model="formData.location">
-                  <option value="" selected disabled>Any Location</option>
-                  <option>Australia</option>
-                  <option>Brazil</option>
-                  <option>Cambodia</option>
-                  <option>Dominica</option>
-                  <option>France</option>
-                  <option>Guyana</option>
-                  <option>Hong Kong</option>
-                  <option>Ireland</option>
-                  <option>Japan</option>
-                  <option>Malaysia</option>
-                  <option>Nepal</option>
-                  <option>Oman</option>
-                  <option>Peru</option>
+                <select class="form-control select2" v-model="formData.property_city">
+                  <option value="" selected disabled>City</option>
+                  <option>NYC</option>
+                  <option>Portland</option>
+
                 </select></div>
             </div>
             <div class="input-group">
@@ -106,7 +96,7 @@
 </template>
 
 <script>
-import { onMounted, reactive } from 'vue'
+import {onMounted, reactive, ref} from 'vue'
 
 export default {
   name: 'FindYourProperty',
@@ -116,7 +106,7 @@ export default {
       property_type: '',
       min_price: '',
       max_price: '',
-      location: '',
+      property_city: '',
     })
 
     function submitForm () {
@@ -127,6 +117,8 @@ export default {
     const sendFormData = () => {
       emit('form-data', formData)
     }
+    const cityList = ref('');
+
 
     onMounted(() => {
       emit('form-data', formData)
@@ -134,6 +126,7 @@ export default {
     return {
       formData,
       submitForm,
+      cityList
     }
 
   },

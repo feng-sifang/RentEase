@@ -59,12 +59,16 @@ class PropertyQueryAPIView(CreateAPIView):
         serializer = PropertyQuerySerializer(data=request.data)
         if serializer.is_valid():
             property_type = serializer.validated_data.get('property_type')
+            property_city = serializer.validated_data.get('property_city')
+
             min_price = serializer.validated_data.get('min_price')
             max_price = serializer.validated_data.get('max_price')
 
             filters = {}
             if property_type:
                 filters['property_type'] = property_type
+            if property_city:
+                filters['property_city'] = property_city
             if min_price and max_price:
                 filters['property_price__range'] = (min_price, max_price)
             elif min_price:
