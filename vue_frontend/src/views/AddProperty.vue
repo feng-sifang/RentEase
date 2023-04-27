@@ -166,6 +166,9 @@ export default {
         }
 
         const response = await instance.appContext.config.globalProperties.$http.post('/property/add/', formData)
+        alert('Add success！');
+        location.reload()
+
         console.log(response)
 
       } catch (error) {

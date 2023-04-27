@@ -73,7 +73,7 @@ class Property(models.Model):
     property_state = models.CharField(max_length=20)
     property_address = models.CharField(max_length=100)
     property_price = models.FloatField()
-    property_availability = models.BooleanField()
+    property_availability = models.BooleanField(default="True")
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
 
     @classmethod
