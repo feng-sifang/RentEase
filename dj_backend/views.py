@@ -86,3 +86,9 @@ class PropertyQueryAPIView(CreateAPIView):
 class PropertyAddView(generics.CreateAPIView):
     queryset = Property.objects.all()
     serializer_class = PropertyCreateSerializer
+
+
+class PropertyDetailView(generics.RetrieveAPIView):
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
+    lookup_field = 'property_id'

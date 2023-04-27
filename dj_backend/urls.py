@@ -13,6 +13,7 @@ urlpatterns = [
     path('property/list/',                 PropertyList.as_view(), name='property_list'),
     path('property/find/',                 PropertyQueryAPIView.as_view(), name='property_find'),
     path('property/add/',                  PropertyAddView.as_view(), name='property_add'),
+    path('property/detail/<int:property_id>/',               PropertyDetailView.as_view(), name='property-detail'),
 
     path('post-signin/',                   post_signin, name='post_signin'),
     path('post-register/',                 post_register, name='post_register'),

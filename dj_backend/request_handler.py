@@ -225,3 +225,4 @@ def get_points(request):
     else:
         return JsonResponse({"success": False})
 
+

@@ -3,12 +3,6 @@ from rest_framework import serializers
 from .models import Property, House, CommercialBuilding
 
 
-class PropertySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Property
-        fields = '__all__'
-
-
 class PropertyQuerySerializer(serializers.Serializer):
     property_type = serializers.CharField(allow_blank=True)
     property_city = serializers.CharField(allow_blank=True)
@@ -43,3 +37,33 @@ class PropertyCreateSerializer(serializers.ModelSerializer):
             return commercial_building
         else:
             raise serializers.ValidationError("Invalid property_type")
+
+
+class HouseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = House
+        fields = ('num_of_rooms',)
+
+
+class PropertySerializer(serializers.ModelSerializer):
+    house = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Property
+        fields = ('property_id', 'property_type', 'property_description','property_price','property_address',
+                  'property_city','property_state','user_id', 'house')
+
+    def get_house(self, obj):
+        if obj.property_type == "House":
+            house_obj = House.objects.get(pk=obj.pk)
+            return HouseSerializer(house_obj).data
+        return None
+
+    def to_representation(self, instance):
+        # Get the original representation
+        ret = super().to_representation(instance)
+        # Merge the 'house' field into the main representation
+        if ret['house'] is not None:
+            house_data = ret.pop('house')
+            ret.update(house_data)
+        return ret
