@@ -31,7 +31,7 @@
               <div class="input-group">
                 <div class="input-group-addon"><i class="mdi mdi-home-modern"></i></div>
                 <select class="form-control select2" v-model="formData.property_type">
-                  <option value="" selected disabled>Type</option>
+                  <option value="" selected>Any Type</option>
                   <option>House</option>
                   <option>Apartment</option>
                   <option value="CommercialBuilding">Commercial Building</option>
@@ -43,7 +43,7 @@
               <div class="input-group">
                 <div class="input-group-addon"><i class="mdi mdi-magnify-minus-outline"></i></div>
                 <select class="form-control select2" v-model="formData.min_price">
-                  <option value="" selected disabled>Min Price</option>
+                  <option value="" selected>Min Price</option>
                   <option>100</option>
                   <option>200</option>
                   <option>300</option>
@@ -60,7 +60,7 @@
               <div class="input-group">
                 <div class="input-group-addon"><i class="mdi mdi-magnify-plus-outline"></i></div>
                 <select class="form-control select2" v-model="formData.max_price">
-                  <option value="" selected disabled>Max Price</option>
+                  <option value="" selected>Max Price</option>
                   <option>1000</option>
                   <option>2000</option>
                   <option>3000</option>
@@ -77,7 +77,7 @@
               <div class="input-group">
                 <div class="input-group-addon"><i class="mdi mdi-map-marker-multiple"></i></div>
                 <select class="form-control select2" v-model="formData.property_city">
-                  <option value="" selected disabled>City</option>
+                  <option value="" selected>Any City</option>
                   <option>NYC</option>
                   <option>Portland</option>
 
