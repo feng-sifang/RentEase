@@ -7,12 +7,11 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import UserProfileView from '../views/UserProfileView.vue'
 import PropertyList from '../views/PropertyList.vue'
-import AddProperty from '../views/AddProperty.vue'
 import UserCreditCard from '../views/UserCreditCard.vue'
 import AddCreditCard from '@/views/AddCreditCard.vue'
 import MyBookingsView from '@/views/MyBookingsView.vue'
 import RewordPointsView from '@/views/RewordPointsView.vue'
-import EditProperty from "@/views/EditProperty.vue";
+import AddOrEditProperty from "@/views/AddOrEditProperty.vue";
 
 const routes = [
     {
@@ -35,13 +34,23 @@ const routes = [
         path: '/property/list/',
         component: PropertyList,
     },
+    // {
+    //     path: '/add-property/',
+    //     component: AddProperty,
+    // },
+    // {
+    //     path: '/edit-property/',
+    //     component: EditProperty,
+    // },
     {
         path: '/add-property/',
-        component: AddProperty,
+        component: AddOrEditProperty,
+        props: {mode: 'add'}, // 通过 props 传递操作类型
     },
     {
-        path: '/edit-property/',
-        component: EditProperty,
+        path: '/edit-property/:itemId/',
+        component: AddOrEditProperty,
+        props: route => ({mode: 'edit', itemId: route.params.itemId}), // 通过 props 传递操作类型和 itemId
     },
     {
         path: '/user-creditcard/',

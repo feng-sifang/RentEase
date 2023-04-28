@@ -4,7 +4,8 @@ from django.db.models import Count
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.forms.models import model_to_dict
-from dj_backend.models import Users, Property, Renters, Agents, CreditCard
+from dj_backend.models import Users, Property, Renters, Agents, CreditCard, House, CommercialBuilding, Apartment, Land, \
+    VacationHome
 from datetime import datetime
 
 
@@ -226,3 +227,41 @@ def get_points(request):
         return JsonResponse({"success": False})
 
 
+def update_property(request, property_id):
+    data = json.loads(request.body)
+    property = Property.objects.get(property_id=property_id)
+    property.property_type = data["property_type"]
+    property.property_description = data["property_description"]
+    property.property_city = data["property_city"]
+    property.property_state = data["property_state"]
+    property.property_address = data["property_address"]
+    property.property_price = data["property_price"]
+    property.save()
+
+    if property.property_type == "House":
+        house = House.objects.get(property_ptr_id=property_id)
+        house.num_of_rooms = data["num_of_rooms"]
+        house.save()
+
+    elif property.property_type == "CommercialBuilding":
+        commercial_building = CommercialBuilding.objects.get(property_ptr_id=property_id)
+        commercial_building.business_type = data["business_type"]
+        commercial_building.save()
+
+    elif property.property_type == "Apartment":
+        apartment = Apartment.objects.get(property_ptr_id=property_id)
+        apartment.num_of_rooms = data["num_of_rooms"]
+        apartment.building_type = data["building_type"]
+        apartment.save()
+
+    elif property.property_type == "Land":
+        land = Land.objects.get(property_ptr_id=property_id)
+        land.land_size = data["land_size"]
+        land.save()
+
+    elif property.property_type == "VacationHome":
+        vacation_home = VacationHome.objects.get(property_ptr_id=property_id)
+        vacation_home.land_size = data["characteristics"]
+        vacation_home.save()
+
+    return JsonResponse({"success": True})
