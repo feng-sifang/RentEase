@@ -1,4 +1,5 @@
 from random import choice
+import random
 
 from django.db import models
 from django.db.models.constraints import UniqueConstraint
@@ -76,23 +77,39 @@ class Property(models.Model):
     property_availability = models.BooleanField(default="True")
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
 
-    @classmethod
-    def generate_fake_data(cls, n):
-        for i in range(n):
-            all_users = Users.objects.all()
-            random_user = choice(all_users)
 
-            model_profile = cls(
-                property_type=fake.random_element(elements=('House', 'Apartment', 'Commercial Building')),
-                property_description=fake.text(),
-                property_city=fake.city(),
-                property_state=fake.state(),
-                property_address=fake.address(),
-                property_price=fake.random_int(min=100, max=10000),
-                property_availability=fake.random_element(elements=('True', 'False')),
-                user_id=random_user
-            )
-            model_profile.save()
+#     Randomly generate Property
+#     python manage.py shell
+#     from dj_backend.models import Property
+#     Property.generate_random_subclass_data(10)
+
+
+
+    @classmethod
+    def generate_random_subclass_data(cls, n):
+        subclasses = cls.__subclasses__()
+        for _ in range(n):
+            subclass = random.choice(subclasses)
+            subclass.generate_fake_data(1)
+
+    @classmethod
+    def generate_fake_data(cls, n, property_type, extra_fields=None):
+        extra_fields = extra_fields or {}
+        for _ in range(n):
+            user = choice(User.objects.all())
+            property_data = {
+                'property_type': property_type,
+                'property_description': fake.text(),
+                'property_city': fake.city(),
+                'property_state': fake.state(),
+                'property_address': fake.address(),
+                'property_price': fake.random_int(min=100, max=10000),
+                'property_availability': fake.boolean(),
+                'user_id': user,
+                **extra_fields
+            }
+            instance = cls(**property_data)
+            instance.save()
 
 
 class CreditCard(models.Model):
@@ -161,19 +178,47 @@ class Neighborhood(models.Model):
 class House(Property):
     num_of_rooms = models.IntegerField()
 
+    @classmethod
+    def generate_fake_data(cls, n):
+        extra_fields = {'num_of_rooms': fake.random_int(min=1, max=10)}
+        super().generate_fake_data(n, 'House', extra_fields)
+
 
 class Apartment(Property):
     num_of_rooms = models.IntegerField()
     building_type = models.CharField(max_length=20)
 
+    @classmethod
+    def generate_fake_data(cls, n):
+        extra_fields = {
+            'num_of_rooms': fake.random_int(min=1, max=10),
+            'building_type': fake.random_element(elements=('Condominium', 'Loft', 'Duplex'))
+        }
+        super().generate_fake_data(n, 'Apartment', extra_fields)
+
 
 class CommercialBuilding(Property):
     business_type = models.CharField(max_length=20)
+
+    @classmethod
+    def generate_fake_data(cls, n):
+        extra_fields = {'business_type': fake.random_element(elements=('Retail', 'Office', 'Industrial', 'Mixed Use'))}
+        super().generate_fake_data(n, 'Commercial Building', extra_fields)
 
 
 class Land(Property):
     land_size = models.FloatField()
 
+    @classmethod
+    def generate_fake_data(cls, n):
+        extra_fields = {'land_size': round(random.uniform(0.1, 1000), 2)}
+        super().generate_fake_data(n, 'Land', extra_fields)
+
 
 class VacationHome(Property):
     characteristics = models.CharField(max_length=20)
+
+    @classmethod
+    def generate_fake_data(cls, n):
+        extra_fields = {'characteristics': fake.random_element(elements=('Beachfront', 'Mountain', 'Lake', 'Urban'))}
+        super().generate_fake_data(n, 'Vacation Home', extra_fields)
