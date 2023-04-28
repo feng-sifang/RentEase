@@ -49,6 +49,7 @@ const routes = [
     },
     {
         path: '/edit-property/:itemId/',
+        name: 'edit',
         component: AddOrEditProperty,
         props: route => ({mode: 'edit', itemId: route.params.itemId}), // 通过 props 传递操作类型和 itemId
     },

@@ -143,14 +143,6 @@ export default {
       num_of_rooms: null,
       business_type: "",
     })
-    // const propertyType = ref('')
-    // const propertyDescription = ref('')
-    // const propertyPrice = ref(undefined)
-    // const propertyAddress = ref('')
-    // const propertyCity = ref('')
-    // const propertyState = ref('')
-    // const numOfRooms = ref('')
-    // const businessType = ref('')
 
     const allInputsValid = () => {
       // Check if all the required input fields are valid here

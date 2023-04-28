@@ -5,7 +5,7 @@
       <ul class="sidebar-card-list">
         <li v-for="(c, index) in typeData" :key="index">
           <i class="mdi mdi-chevron-right"></i>
-          {{ c.property_type }}
+          {{ c.property_type === 'CommercialBuilding' ? 'Commercial Building' : c.property_type }}
           <span class="sidebar-badge">
             {{ c.total_count }}
           </span>

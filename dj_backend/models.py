@@ -203,7 +203,7 @@ class CommercialBuilding(Property):
     @classmethod
     def generate_fake_data(cls, n):
         extra_fields = {'business_type': fake.random_element(elements=('Retail', 'Office', 'Industrial', 'Mixed Use'))}
-        super().generate_fake_data(n, 'Commercial Building', extra_fields)
+        super().generate_fake_data(n, 'CommercialBuilding', extra_fields)
 
 
 class Land(Property):

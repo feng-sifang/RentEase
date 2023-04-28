@@ -261,7 +261,58 @@ def update_property(request, property_id):
 
     elif property.property_type == "VacationHome":
         vacation_home = VacationHome.objects.get(property_ptr_id=property_id)
-        vacation_home.land_size = data["characteristics"]
+        vacation_home.characteristics = data["characteristics"]
         vacation_home.save()
 
     return JsonResponse({"success": True})
+
+
+def property_detail(request, property_id):
+    property = Property.objects.get(property_id=property_id)
+    response = {
+        "property_id": property.property_id,
+        "property_type": property.property_type,
+        "property_description": property.property_description,
+        "property_city": property.property_city,
+        "property_state": property.property_state,
+        "property_address": property.property_address,
+        "property_price": property.property_price,
+    }
+    print(property.property_type)
+    if property.property_type == "House":
+        house = House.objects.get(property_ptr_id=property_id)
+        response = {
+            **response,
+            "num_of_rooms": house.num_of_rooms,
+        }
+
+    elif property.property_type == "CommercialBuilding":
+        commercial_building = CommercialBuilding.objects.get(property_ptr_id=property_id)
+        response = {
+            **response,
+            "business_type": commercial_building.business_type,
+        }
+
+    elif property.property_type == "Apartment":
+        apartment = Apartment.objects.get(property_ptr_id=property_id)
+        response = {
+            **response,
+            "num_of_rooms": apartment.num_of_rooms,
+            "building_type": apartment.building_type,
+        }
+
+    elif property.property_type == "Land":
+        land = Land.objects.get(property_ptr_id=property_id)
+        response = {
+            **response,
+            "land_size": land.land_size,
+        }
+
+    elif property.property_type == "VacationHome":
+        vacation_home = VacationHome.objects.get(property_ptr_id=property_id)
+        response = {
+            **response,
+            "characteristics": vacation_home.characteristics,
+        }
+
+    return JsonResponse(response)

@@ -1,16 +1,11 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
-from rest_framework import status, generics, mixins
-from rest_framework.mixins import CreateModelMixin
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import OrderingFilter
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework import status, generics
+
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 
 from .models import Property
-from .serializers import PropertySerializer, PropertyQuerySerializer, PropertyCreateSerializer, PropertyListSerializer, \
-    PropertyUpdateSerializer
-from .filters import PropertyFilter
+from .serializers import PropertySerializer, PropertyQuerySerializer, PropertyCreateSerializer, PropertyListSerializer
 
 
 class HomeView(TemplateView):
@@ -75,35 +70,6 @@ class PropertyQueryAPIView(CreateAPIView):
 class PropertyAddView(generics.CreateAPIView):
     queryset = Property.objects.all()
     serializer_class = PropertyCreateSerializer
-
-
-class PropertyUpdateView(mixins.UpdateModelMixin, generics.GenericAPIView):
-    queryset = Property.objects.all()
-    serializer_class = PropertyUpdateSerializer
-    lookup_field = 'property_id'
-
-    def get_object(self):
-        obj = super().get_object()
-        if self.request.data.get('property_type') == 'House':
-            obj = obj.as_house()
-        elif self.request.data.get('property_type') == 'CommercialBuilding':
-            obj = obj.as_commercial_building()
-        return obj
-
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        print(instance)
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
-
-    def post(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
 
 
 class PropertyDetailView(generics.RetrieveAPIView):

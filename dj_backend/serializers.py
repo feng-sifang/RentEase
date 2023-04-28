@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 
 from .models import Property, House, CommercialBuilding
@@ -68,8 +69,11 @@ class PropertySerializer(serializers.ModelSerializer):
 
     def get_house(self, obj):
         if obj.property_type == "House":
-            house_obj = House.objects.get(pk=obj.pk)
-            return HouseSerializer(house_obj).data
+            try:
+                house_obj = House.objects.get(pk=obj.pk)
+                return HouseSerializer(house_obj).data
+            except ObjectDoesNotExist:
+                return None
         return None
 
     def get_commercial_building(self, obj):
@@ -95,36 +99,4 @@ class PropertySerializer(serializers.ModelSerializer):
         return ret
 
 
-class PropertyUpdateSerializer(serializers.ModelSerializer):
-    property_id = serializers.ReadOnlyField()
-    property_type = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Property
-        fields = ['property_id', 'property_type', 'property_description', 'property_price', 'property_address',
-                  'property_city', 'property_state', 'user_id']
-
-    def get_property_type(self, obj):
-        if isinstance(obj, House):
-            return 'House'
-        elif isinstance(obj, CommercialBuilding):
-            return 'Commercial'
-        else:
-            return None
-    # def set_property_type(self, instance, property_type):
-    #     if property_type == 'House':
-    #         # Perform the update for a House instance
-    #     elif property_type == 'Commercial':
-    #         # Perform the update for a CommercialBuilding instance
-    #     else:
-    #         raise serializers.ValidationError("Invalid property_type value")
-    #     return instance
-    #
-    # def update(self, instance, validated_data):
-    #     property_type = validated_data.pop('property_type', None)
-    #     instance = super().update(instance, validated_data)
-    #
-    #     if property_type is not None:
-    #         instance = self.set_property_type(instance, property_type)
-    #     return instance
 

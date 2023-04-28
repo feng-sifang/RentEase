@@ -13,9 +13,9 @@ urlpatterns = [
     path('property/list/',                 PropertyList.as_view(), name='property_list'),
     path('property/find/',                 PropertyQueryAPIView.as_view(), name='property_find'),
     path('property/add/',                  PropertyAddView.as_view(), name='property_add'),
-    path('property/detail/<int:property_id>/',   PropertyDetailView.as_view(), name='property-detail'),
-    path('property/edit/<int:property_id>/',   update_property, name='property-update'),
 
+    path('property/detail/<int:property_id>/', property_detail, name='property-detail'),
+    path('property/edit/<int:property_id>/',   update_property, name='property-update'),
     path('post-signin/',                   post_signin, name='post_signin'),
     path('post-register/',                 post_register, name='post_register'),
     path('logout/',                        logout_handler, name='logout'),
