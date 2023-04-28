@@ -16,7 +16,7 @@
           <form @submit.prevent="submitForm">
             <div class="card padding-card">
               <div class="card-body"><h5 class="card-title mb-4">Property Description</h5>
-                <div class="form-group"><label>Property Type <span class="text-danger">*</span></label><select
+                <div class="form-group"><label>Property Type </label><select
                     class="form-control custom-select" v-model="formData.property_type" :disabled="mode_ === 'edit'">
                   <option value="" disabled selected>Select Type</option>
                   <option>House</option>
@@ -25,7 +25,7 @@
                   <option>Land</option>
                   <option>Vacation Home</option>
                 </select></div>
-                <div class="form-group"><label>Property Description <span class="text-danger">*</span></label><textarea
+                <div class="form-group"><label>Property Description </label><textarea
                     class="form-control" rows="4" v-model="formData.property_description"></textarea>
                 </div>
 
@@ -39,16 +39,14 @@
                     <option>2</option>
                     <option>3</option>
                   </select></div>
-                  <div class="form-group col-md-4"><label>Apartment Type <span
-                      class="text-danger">*</span></label><select
+                  <div class="form-group col-md-4"><label>Apartment Type </label><select
                       class="form-control custom-select" :disabled="formData.property_type !== 'Apartment'" v-model="formData.building_type">
                     <option disabled selected value="">Select Type</option>
                     <option>Condominium</option>
                     <option>Loft</option>
                     <option>Duplex</option>
                   </select></div>
-                  <div class="form-group col-md-4"><label>Business Type <span
-                      class="text-danger">*</span></label><select
+                  <div class="form-group col-md-4"><label>Business Type </label><select
                       class="form-control custom-select" :disabled="formData.property_type !== 'CommercialBuilding'"
                       v-model="formData.business_type">
                     <option disabled selected value="">Select Type</option>
@@ -58,15 +56,13 @@
                   </select></div>
                 </div>
                 <div class="row">
-                  <div class="form-group col-md-4"><label>Vacation Characteristics <span
-                      class="text-danger">*</span></label><input
+                  <div class="form-group col-md-4"><label>Vacation Characteristics </label><input
                       type="text" class="form-control" placeholder="Vacation Characteristics"
                       :disabled="formData.property_type !== 'Vacation Home'"></div>
-                  <div class="form-group col-md-4"><label>Land Size <span class="text-danger">*</span></label><input
+                  <div class="form-group col-md-4"><label>Land Size </label><input
                       type="text" class="form-control" placeholder="sq ft"
                       :disabled="formData.property_type !== 'Land'"></div>
-                  <div class="form-group col-md-4"><label>Rent Price <span
-                      class="text-danger">*</span></label><input
+                  <div class="form-group col-md-4"><label>Rent Price </label><input
                       type="text" class="form-control"
                       placeholder="Enter Rent Price" v-model="formData.property_price
 "></div>
@@ -76,23 +72,19 @@
             <div class="card padding-card">
               <div class="card-body"><h5 class="card-title mb-4">Property Location</h5>
                 <div class="row">
-                  <div class="form-group col-md-4"><label>Address <span class="text-danger">*</span></label><input
+                  <div class="form-group col-md-4"><label>Address </label><input
                       type="text" class="form-control" placeholder="Enter Address" v-model="formData.property_address">
                   </div>
 
-                  <div class="form-group col-md-4"><label>City <span class="text-danger">*</span></label><input
+                  <div class="form-group col-md-4"><label>City </label><input
                       type="text" class="form-control" placeholder="Enter City" v-model="formData.property_city"></div>
-                  <div class="form-group col-md-4"><label>State <span class="text-danger">*</span></label><input
+                  <div class="form-group col-md-4"><label>State </label><input
                       type="text" class="form-control" placeholder="Enter State" v-model="formData.property_state">
                   </div>
                 </div>
                 <div class="row">
 
-                  <div class="form-group col-md-4"><label>Zip/Postal Code <span
-                      class="text-danger">*</span></label><input
-                      type="text" class="form-control"
-                      placeholder="Enter Zip/Postal"></div>
-                  <div class="form-group col-md-4"><label>Neighborhood <span class="text-danger">*</span></label><input
+                  <div class="form-group col-md-4"><label>Neighborhood </label><input
                       type="text" class="form-control" placeholder="..."></div>
                 </div>
               </div>
