@@ -41,11 +41,11 @@
                   </select></div>
                   <div class="form-group col-md-4"><label>Apartment Type <span
                       class="text-danger">*</span></label><select
-                      class="form-control custom-select" :disabled="formData.property_type !== 'Apartment'">
+                      class="form-control custom-select" :disabled="formData.property_type !== 'Apartment'" v-model="formData.building_type">
                     <option disabled selected value="">Select Type</option>
-                    <option>Type 1</option>
-                    <option>Type 2</option>
-                    <option>Type 3</option>
+                    <option>Condominium</option>
+                    <option>Loft</option>
+                    <option>Duplex</option>
                   </select></div>
                   <div class="form-group col-md-4"><label>Business Type <span
                       class="text-danger">*</span></label><select

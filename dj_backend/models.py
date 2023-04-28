@@ -1,6 +1,7 @@
 from random import choice
 import random
 
+import usaddress
 from django.db import models
 from django.db.models.constraints import UniqueConstraint
 from django.contrib.auth.models import User
@@ -83,6 +84,8 @@ class Property(models.Model):
 #     from dj_backend.models import Property
 #     Property.generate_random_subclass_data(10)
 
+    # delete：Property.delete_fake_data()
+
 
 
     @classmethod
@@ -97,11 +100,17 @@ class Property(models.Model):
         extra_fields = extra_fields or {}
         for _ in range(n):
             user = choice(User.objects.all())
+            full_address = fake.address()
+            parsed_address = usaddress.parse(full_address)
+            address_dict = {k: v for (v, k) in parsed_address}
+
+            city = address_dict.get('PlaceName', '')
+            state = address_dict.get('StateName', '')
             property_data = {
                 'property_type': property_type,
                 'property_description': fake.text(),
-                'property_city': fake.city(),
-                'property_state': fake.state(),
+                'property_city': city,
+                'property_state': state,
                 'property_address': fake.address(),
                 'property_price': fake.random_int(min=100, max=10000),
                 'property_availability': fake.boolean(),
@@ -111,6 +120,12 @@ class Property(models.Model):
             instance = cls(**property_data)
             instance.save()
 
+    @classmethod
+    def delete_fake_data(cls):
+        subclasses = cls.__subclasses__()
+        for subclass in subclasses:
+            subclass.objects.all().delete()
+        cls.objects.all().delete()
 
 class CreditCard(models.Model):
     credit_card_id = models.AutoField(primary_key=True)

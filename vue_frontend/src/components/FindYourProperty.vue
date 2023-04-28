@@ -78,7 +78,7 @@
                 <div class="input-group-addon"><i class="mdi mdi-map-marker-multiple"></i></div>
                 <select class="form-control select2" v-model="formData.property_city">
                   <option value="" selected>Any City</option>
-                  <option>NYC</option>
+                  <option v-for="(c, index) in cityList" :key="index">{{c}}</option>
                   <option>Portland</option>
 
                 </select></div>
@@ -96,11 +96,11 @@
 </template>
 
 <script>
-import {onMounted, reactive, ref} from 'vue'
+import { getCurrentInstance,onMounted, reactive, ref} from 'vue'
 
 export default {
   name: 'FindYourProperty',
-  setup (_, { emit }) {
+  setup(_, {emit}) {
 
     const formData = reactive({
       property_type: '',
@@ -108,8 +108,9 @@ export default {
       max_price: '',
       property_city: '',
     })
-
-    function submitForm () {
+    const cityList = ref([])
+    const instance = getCurrentInstance()
+    function submitForm() {
       console.log('Form data:', formData)
       sendFormData()
     }
@@ -117,10 +118,17 @@ export default {
     const sendFormData = () => {
       emit('form-data', formData)
     }
-    const cityList = ref('');
-
+    const fetchGroupedPropertyData = async () => {
+      try {
+        const response = await instance.appContext.config.globalProperties.$http.get('/property/city-list/')
+        cityList.value = response.data
+      } catch (error) {
+        console.error('Error fetching grouped property data:', error)
+      }
+    }
 
     onMounted(() => {
+      fetchGroupedPropertyData()
       emit('form-data', formData)
     })
     return {

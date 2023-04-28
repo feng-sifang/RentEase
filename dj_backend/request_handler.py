@@ -1,7 +1,7 @@
 import json
 
 from django.db.models import Count
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.forms.models import model_to_dict
 from dj_backend.models import Users, Property, Renters, Agents, CreditCard, House, CommercialBuilding, Apartment, Land, \
@@ -167,6 +167,10 @@ def property_side_card(request):
         'city_data': city_data,
         'availability_data': availability_data,
     })
+def property_city_list(request):
+    city_list = Property.objects.values_list('property_city', flat=True).distinct()
+
+    return HttpResponse(json.dumps(list(city_list)), content_type="application/json")
 
 
 def get_user_creditcard(request):
