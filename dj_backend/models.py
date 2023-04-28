@@ -195,7 +195,7 @@ class House(Property):
 
     @classmethod
     def generate_fake_data(cls, n):
-        extra_fields = {'num_of_rooms': fake.random_int(min=1, max=10)}
+        extra_fields = {'num_of_rooms': fake.random_int(min=1, max=3)}
         super().generate_fake_data(n, 'House', extra_fields)
 
 
@@ -206,7 +206,7 @@ class Apartment(Property):
     @classmethod
     def generate_fake_data(cls, n):
         extra_fields = {
-            'num_of_rooms': fake.random_int(min=1, max=10),
+            'num_of_rooms': fake.random_int(min=1, max=3),
             'building_type': fake.random_element(elements=('Condominium', 'Loft', 'Duplex'))
         }
         super().generate_fake_data(n, 'Apartment', extra_fields)
