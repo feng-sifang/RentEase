@@ -31,11 +31,6 @@
               Reword Points
             </router-link>
           </li>
-          <li class="nav-item" v-if="this.userType==='Agent'">
-            <router-link to="" class="nav-link">
-              Add Property
-            </router-link>
-          </li>
         </ul>
       </div>
     </div>

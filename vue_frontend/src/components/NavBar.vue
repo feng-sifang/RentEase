@@ -11,9 +11,9 @@
           </li>
           <li class="nav-item dropdown">
             <router-link
-              to="/user-profile/"
-              class="nav-link"
-              id="navbarDropdownPortfolio">
+                to="/user-profile/"
+                class="nav-link"
+                id="navbarDropdownPortfolio">
               My Account
             </router-link>
           </li>
@@ -27,6 +27,14 @@
                 Hi, {{ this.userFirstName }}
               </router-link>
             </li>
+            <li class="list-inline-item"  v-if="this.userType==='Agent'">
+            <router-link to="/add-property/" custom>
+              <template #default="{ navigate }">
+                <button class="btn btn-success" @click="navigate">ADD PROPERTY</button>
+              </template>
+            </router-link>
+            </li>
+
           </ul>
         </div>
 
@@ -52,25 +60,27 @@
 export default {
   name: 'NavBar',
 
-  data () {
+  data() {
     return {
       waitCheckLogin: false,
       displayUserName: false,
       userFirstName: '',
+      userType:'',
     }
   },
 
   methods: {
-    async checkLogin () {
+    async checkLogin() {
       const response = (await this.axios.get('/get-user-profile/')).data
       this.displayUserName = !!response['is_logged_in']
       this.userFirstName = response['first_name']
       this.waitCheckLogin = true
+      this.userType = response['user_type']
     },
   },
 
   // check if data is passed from parent component
-  async mounted () {
+  async mounted() {
     await this.checkLogin()
   },
 }
