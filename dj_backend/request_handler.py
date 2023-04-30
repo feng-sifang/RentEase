@@ -48,7 +48,7 @@ def post_register(request):
                 password=user_password,
                 user_type=user_type,
                 budget=0,
-                desired_move_in_date="",
+                desired_move_in_date="1920-01-01",
                 total_cost=0
             )
             renter.save()
