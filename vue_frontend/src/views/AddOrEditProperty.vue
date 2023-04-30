@@ -158,7 +158,6 @@ export default {
     })
     const userType = ref("")
     const email = ref("")
-    const userId = ref("")
 
     const allInputsValid = () => {
       // Check if all the required input fields are valid here
@@ -176,7 +175,6 @@ export default {
           console.log('get:', response)
           userType.value = response['user_type']
           email.value = response['email']
-          userId.value = response['user_id']
           formData.user_id = response['user_id']
         }
         console.log('User Profile', response)
@@ -244,7 +242,6 @@ export default {
       submitForm,
       userType,
       email,
-      userId
     }
   },
 }
