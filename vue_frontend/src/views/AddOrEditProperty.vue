@@ -1,14 +1,30 @@
 <template>
+  <nav-bar/>
   <section class="bg-dark py-5 user-header">
     <div class="container">
       <div class="row align-items-center mt-2 mb-5 pb-4">
-        <div class="col"><!-- Heading --><h1 class="text-white mb-2">
-          {{ mode_ === 'edit' ? 'MANAGE PROPERTY' : 'ADD PROPERTY' }} | {{ property_id }} </h1><!-- Text -->
+        <div class="col">
+          <!-- Heading -->
+          <h1 class="text-white mb-2">{{
+              mode_ === 'edit' ? 'MANAGE PROPERTY' + ' | ID:' + property_id : 'ADD PROPERTY'
+            }} </h1>
+          <!-- Text -->
+          <h6 class="font-weight-normal text-white-50 mb-0">
+            Settings for
+            <a class="text-reset" href="mailto:yoursite@gmail.com">
+              {{ this.email }}
+            </a>
+          </h6>
         </div>
-        <div class="col-auto"><!-- Button -->
-          <button class="btn btn-sm btn-primary">Log Out</button>
+        <div class="col-auto">
+          <!-- Button -->
+          <router-link to="/" class="btn btn-sm btn-primary" @click="logOut">
+            Log Out
+          </router-link>
         </div>
-      </div><!-- / .row --></div><!-- / .container --></section><!-- End Inner Header --><!-- Add Property -->
+      </div>
+    </div>
+  </section>
   <section class="section-padding pt-0 user-pages-main">
     <div class="container">
       <div class="row">
@@ -40,7 +56,8 @@
                     <option>3</option>
                   </select></div>
                   <div class="form-group col-md-4"><label>Apartment Type </label><select
-                      class="form-control custom-select" :disabled="formData.property_type !== 'Apartment'" v-model="formData.building_type">
+                      class="form-control custom-select" :disabled="formData.property_type !== 'Apartment'"
+                      v-model="formData.building_type">
                     <option disabled selected value="">Select Type</option>
                     <option>Condominium</option>
                     <option>Loft</option>
@@ -104,10 +121,11 @@
 <script>
 import {getCurrentInstance, onMounted, reactive, ref} from 'vue'
 import {useRoute} from 'vue-router';
+import NavBar from "@/components/NavBar.vue";
 
 export default {
   name: 'EditOrProperty',
-  components: {},
+  components: {NavBar},
   props: {
     mode: {
       type: String,
@@ -131,10 +149,15 @@ export default {
       property_address: "",
       property_city: "",
       property_state: "",
-      user_id: 1,
+      user_id: "1",
       num_of_rooms: null,
       business_type: "",
+      building_type: "",
+      characteristics: "",
+      land_size: ""
     })
+    const userType = ref("")
+    const email = ref("")
 
     const allInputsValid = () => {
       // Check if all the required input fields are valid here
@@ -146,6 +169,18 @@ export default {
 
     onMounted(async () => {
       console.log("ok")
+      try {
+        const response = (await instance.appContext.config.globalProperties.$http.get('/get-user-profile/')).data
+        if (response.success) {
+          console.log('get:', response)
+          userType.value = response['user_type']
+          email.value = response['email']
+          formData.user_id = response['user_id']
+        }
+        console.log('User Profile', response)
+      } catch (error) {
+        console.log(error)
+      }
 
       // Initial the data
       if (mode_.value === 'edit') {
@@ -175,8 +210,21 @@ export default {
         if (!filteredData.business_type) {
           delete filteredData.business_type;
         }
+        if (!filteredData.building_type) {
+          delete filteredData.building_type;
+        }
+        if (!filteredData.characteristics) {
+          delete filteredData.characteristics;
+        }
+        if (!filteredData.land_size) {
+          delete filteredData.land_size;
+        }
+        if (mode_.value==="edit") {
+          delete filteredData.user_id;
+        }
 
-        const post_url = mode_.value ==='edit'?`/property/edit/${itemId}/`:'/property/add/';
+
+        const post_url = mode_.value === 'edit' ? `/property/edit/${itemId}/` : '/property/add/';
         const response = await instance.appContext.config.globalProperties.$http.post(post_url, filteredData)
         console.log(response)
 
@@ -192,6 +240,8 @@ export default {
       formData,
       allInputsValid,
       submitForm,
+      userType,
+      email,
     }
   },
 }
