@@ -16,8 +16,8 @@
           <div class="card-body"><span class="float-right text-success" v-if="userType==='Agent'"><router-link
               :to="{ name: 'edit', params: { itemId: property.property_id } }"><i
               class="mdi mdi-table-edit">Manage</i></router-link>
-            <router-link class="float-right text-danger"
-                         to="/your-delete-path"><i class="mdi mdi-delete-forever"></i>Delete</router-link>
+            <a class="float-right text-danger" @click="sendItemId"><i
+                class="mdi mdi-delete-forever"></i>Delete</a>
 </span>
             <h5 class="card-title">
               {{ property.property_type === 'CommercialBuilding' ? 'Commercial Building' : property.property_type }}
@@ -52,8 +52,7 @@
 <script>
 export default {
   name: 'PropertyListItem',
-
-  props: {
+    props: {
     property: {
       type: Object,
       required: true,
@@ -63,5 +62,15 @@ export default {
       required: true,
     },
   },
+  setup(props, {emit}) {
+    const sendItemId = () => {
+    emit('sent-item-id', props.property.property_id)
+  }
+  return{
+      sendItemId
+  }
+  },
+
+
 }
 </script>

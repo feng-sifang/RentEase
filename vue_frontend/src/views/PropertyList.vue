@@ -10,7 +10,8 @@
         <div class="col-lg-8 col-md-8">
 
           <div class="row">
-            <PropertyListItem v-for="(property, index) in properties" :key="index" :property="property" :userType="userType"/>
+            <PropertyListItem v-for="(property, index) in properties" :key="index" :property="property"
+                              :userType="userType" @sent-item-id="handleDelete"/>
           </div>
           <nav class="mt-5">
             <ul class="pagination justify-content-center">
@@ -43,7 +44,7 @@
 
 <script>
 import PropertyListItem from '@/components/PropertyListItem.vue'
-import {computed, getCurrentInstance, onMounted, provide, ref} from 'vue'
+import {computed, getCurrentInstance, onMounted, provide, reactive, ref} from 'vue'
 import FindYourProperty from '@/components/FindYourProperty.vue'
 import SideCard from '@/components/SideCard.vue'
 import NavBar from '@/components/NavBar.vue'
@@ -61,15 +62,34 @@ export default {
     const instance = getCurrentInstance()
     const searchResults = ref([])
     const userType = ref("")
+    const formData = reactive({
+      property_type: '',
+      min_price: '',
+      max_price: '',
+      property_city: '',
+    })
     const handleFormData = async (criteria) => {
-      const url = baseUrl
+      Object.assign(formData, criteria)
       try {
-        const response = await instance.appContext.config.globalProperties.$http.post(url, criteria)
+        const response = await instance.appContext.config.globalProperties.$http.post(baseUrl, criteria)
         properties.value = response.data
       } catch (error) {
         console.error('Error fetching properties:', error)
       }
     }
+    const handleDelete = async (criteria) => {
+const userConfirmed = confirm("Are you sure to delete " + criteria + "?");
+
+  if (userConfirmed) {
+    try {
+      await instance.appContext.config.globalProperties.$http.get(`/property/delete/${criteria}/`);
+      handleFormData(formData);
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+    }
+  }
+    }
+
     onMounted(async () => {
       console.log("ok")
       try {
@@ -84,54 +104,55 @@ export default {
       }
     })
 
-      // pages
-      const currentPage = ref(1)
-      const numPages = ref(10)
+    // pages
+    const currentPage = ref(1)
+    const numPages = ref(10)
 
-      const hasPrevious = computed(() => currentPage.value > 1)
-      const hasNext = computed(() => currentPage.value < numPages.value)
+    const hasPrevious = computed(() => currentPage.value > 1)
+    const hasNext = computed(() => currentPage.value < numPages.value)
 
-      const pageNumbers = computed(() => {
-        const start = Math.max(1, currentPage.value - 2)
-        const end = Math.min(numPages.value, currentPage.value + 2)
-        return Array.from({length: end - start + 1}, (_, i) => i + start)
-      })
+    const pageNumbers = computed(() => {
+      const start = Math.max(1, currentPage.value - 2)
+      const end = Math.min(numPages.value, currentPage.value + 2)
+      return Array.from({length: end - start + 1}, (_, i) => i + start)
+    })
 
-      function goToPage(pageNumber) {
-        currentPage.value = pageNumber
+    function goToPage(pageNumber) {
+      currentPage.value = pageNumber
+    }
+
+    function goToPreviousPage() {
+      if (hasPrevious.value) {
+        goToPage(currentPage.value - 1)
       }
+    }
 
-      function goToPreviousPage() {
-        if (hasPrevious.value) {
-          goToPage(currentPage.value - 1)
-        }
+    function goToNextPage() {
+      if (hasNext.value) {
+        goToPage(currentPage.value + 1)
       }
+    }
 
-      function goToNextPage() {
-        if (hasNext.value) {
-          goToPage(currentPage.value + 1)
-        }
-      }
+    return {
+      properties,
+      price_min,
+      price_max,
+      handleFormData,
+      searchResults,
+      currentPage,
+      numPages,
+      hasPrevious,
+      hasNext,
+      pageNumbers,
+      goToPage,
+      goToPreviousPage,
+      goToNextPage,
+      userType,
+      handleDelete
+    }
+  },
 
-      return {
-        properties,
-        price_min,
-        price_max,
-        handleFormData,
-        searchResults,
-        currentPage,
-        numPages,
-        hasPrevious,
-        hasNext,
-        pageNumbers,
-        goToPage,
-        goToPreviousPage,
-        goToNextPage,
-        userType
-      }
-    },
-
-  }
+}
 </script>
 
 <style scoped>

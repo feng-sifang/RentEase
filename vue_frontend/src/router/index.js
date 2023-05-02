@@ -34,18 +34,10 @@ const routes = [
         path: '/property/list/',
         component: PropertyList,
     },
-    // {
-    //     path: '/add-property/',
-    //     component: AddProperty,
-    // },
-    // {
-    //     path: '/edit-property/',
-    //     component: EditProperty,
-    // },
     {
         path: '/add-property/',
         component: AddOrEditProperty,
-        props: {mode: 'add'}, // 通过 props 传递操作类型
+        props: {mode: 'add'}, //
     },
     {
         path: '/edit-property/:itemId/',

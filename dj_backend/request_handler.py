@@ -320,3 +320,8 @@ def property_detail(request, property_id):
         }
 
     return JsonResponse(response)
+
+def delete_property(request, property_id):
+    property = Property.objects.get(property_id=property_id)
+    property.delete()
+    return JsonResponse({'property_id':property_id})

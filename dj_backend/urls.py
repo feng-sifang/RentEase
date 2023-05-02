@@ -16,6 +16,7 @@ urlpatterns = [
 
     path('property/detail/<int:property_id>/', property_detail, name='property-detail'),
     path('property/edit/<int:property_id>/',   update_property, name='property-update'),
+    path('property/delete/<int:property_id>/', delete_property, name='property-delete'),
     path('post-signin/',                   post_signin, name='post_signin'),
     path('post-register/',                 post_register, name='post_register'),
     path('logout/',                        logout_handler, name='logout'),
