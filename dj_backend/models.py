@@ -78,15 +78,13 @@ class Property(models.Model):
     property_availability = models.BooleanField(default="True")
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
 
+    #     Randomly generate Property
 
-#     Randomly generate Property
-#     python manage.py shell
-#     from dj_backend.models import Property
-#     Property.generate_random_subclass_data(10)
+    #     >>> python manage.py shell
+    #     >>> from dj_backend.models import Property
+    #     >>> Property.generate_random_subclass_data(10)
 
     # delete：Property.delete_fake_data()
-
-
 
     @classmethod
     def generate_random_subclass_data(cls, n):
@@ -126,6 +124,7 @@ class Property(models.Model):
         for subclass in subclasses:
             subclass.objects.all().delete()
         cls.objects.all().delete()
+
 
 class CreditCard(models.Model):
     credit_card_id = models.AutoField(primary_key=True)

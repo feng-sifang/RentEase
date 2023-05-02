@@ -34,14 +34,6 @@ const routes = [
         path: '/property/list/',
         component: PropertyList,
     },
-    // {
-    //     path: '/add-property/',
-    //     component: AddProperty,
-    // },
-    // {
-    //     path: '/edit-property/',
-    //     component: EditProperty,
-    // },
     {
         path: '/add-property/',
         component: AddOrEditProperty,
