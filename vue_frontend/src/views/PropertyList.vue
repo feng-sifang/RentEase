@@ -10,8 +10,8 @@
         <div class="col-lg-8 col-md-8">
 
           <div class="row">
-            <PropertyListItem
-              v-for="(property, index) in properties" :key="index" :property="property" :userType="userType"/>
+            <PropertyListItem v-for="(property, index) in properties" :key="index" :property="property"
+                              :userType="userType" @sent-item-id="handleDelete"/>
           </div>
           <nav class="mt-5">
             <ul class="pagination justify-content-center">
@@ -21,13 +21,12 @@
                 </a>
               </li>
               <li
-                v-for="pageNumber in pageNumbers"
-                :key="pageNumber"
-                class="page-item"
-                :class="{ active: pageNumber === currentPage }">
-                <a class="page-link" href="#" @click.prevent="goToPage(pageNumber)">
-                  {{ pageNumber }}
-                </a>
+                  v-for="pageNumber in pageNumbers"
+                  :key="pageNumber"
+                  class="page-item"
+                  :class="{ active: pageNumber === currentPage }"
+              >
+                <a class="page-link" href="#" @click.prevent="goToPage(pageNumber)">{{ pageNumber }}</a>
               </li>
               <li class="page-item" :class="{ disabled: !hasNext }">
                 <a class="page-link" href="#" @click.prevent="goToNextPage">
@@ -39,21 +38,22 @@
         </div>
       </div>
     </div>
-  </section>
+  </section><!-- End Properties List --><!-- Join Team -->
+
 </template>
 
 <script>
 import PropertyListItem from '@/components/PropertyListItem.vue'
-import { computed, getCurrentInstance, onMounted, provide, ref } from 'vue'
+import {computed, getCurrentInstance, onMounted, provide, reactive, ref} from 'vue'
 import FindYourProperty from '@/components/FindYourProperty.vue'
 import SideCard from '@/components/SideCard.vue'
 import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'PropertyList',
-  components: { NavBar, SideCard, FindYourProperty, PropertyListItem },
+  components: {NavBar, SideCard, FindYourProperty, PropertyListItem},
 
-  setup () {
+  setup() {
     const properties = ref([])
     provide('properties', properties)
     const price_min = ref(0)
@@ -61,18 +61,37 @@ export default {
     const baseUrl = '/property/find/'
     const instance = getCurrentInstance()
     const searchResults = ref([])
-    const userType = ref('')
+    const userType = ref("")
+    const formData = reactive({
+      property_type: '',
+      min_price: '',
+      max_price: '',
+      property_city: '',
+    })
     const handleFormData = async (criteria) => {
-      const url = baseUrl
+      Object.assign(formData, criteria)
       try {
-        const response = await instance.appContext.config.globalProperties.$http.post(url, criteria)
+        const response = await instance.appContext.config.globalProperties.$http.post(baseUrl, criteria)
         properties.value = response.data
       } catch (error) {
         console.error('Error fetching properties:', error)
       }
     }
+    const handleDelete = async (criteria) => {
+const userConfirmed = confirm("Are you sure to delete " + criteria + "?");
+
+  if (userConfirmed) {
+    try {
+      await instance.appContext.config.globalProperties.$http.get(`/property/delete/${criteria}/`);
+      handleFormData(formData);
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+    }
+  }
+    }
+
     onMounted(async () => {
-      console.log('ok')
+      console.log("ok")
       try {
         const response = (await instance.appContext.config.globalProperties.$http.get('/get-user-profile/')).data
         if (response.success) {
@@ -95,20 +114,20 @@ export default {
     const pageNumbers = computed(() => {
       const start = Math.max(1, currentPage.value - 2)
       const end = Math.min(numPages.value, currentPage.value + 2)
-      return Array.from({ length: end - start + 1 }, (_, i) => i + start)
+      return Array.from({length: end - start + 1}, (_, i) => i + start)
     })
 
-    function goToPage (pageNumber) {
+    function goToPage(pageNumber) {
       currentPage.value = pageNumber
     }
 
-    function goToPreviousPage () {
+    function goToPreviousPage() {
       if (hasPrevious.value) {
         goToPage(currentPage.value - 1)
       }
     }
 
-    function goToNextPage () {
+    function goToNextPage() {
       if (hasNext.value) {
         goToPage(currentPage.value + 1)
       }
@@ -129,6 +148,7 @@ export default {
       goToPreviousPage,
       goToNextPage,
       userType,
+      handleDelete
     }
   },
 

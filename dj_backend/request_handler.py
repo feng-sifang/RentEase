@@ -151,7 +151,7 @@ def save_user_profile(request):
         return JsonResponse({"success": False})
 
 
-def property_side_card():
+def property_side_card(request):
     grouped_by_type = Property.objects.values('property_type').annotate(total_count=Count('property_id'))
     grouped_by_city = Property.objects.values('property_city').annotate(total_count=Count('property_id'))
     grouped_by_availability = Property.objects.values('property_availability').annotate(
@@ -168,7 +168,7 @@ def property_side_card():
     })
 
 
-def property_city_list():
+def property_city_list(request):
     city_list = Property.objects.values_list('property_city', flat=True).distinct()
 
     return HttpResponse(json.dumps(list(city_list)), content_type="application/json")
@@ -272,7 +272,7 @@ def update_property(request, property_id):
     return JsonResponse({"success": True})
 
 
-def property_detail(property_id):
+def property_detail(request, property_id):
     _property = Property.objects.get(property_id=property_id)
     response = {
         "property_id": _property.property_id,
@@ -321,3 +321,9 @@ def property_detail(property_id):
         }
 
     return JsonResponse(response)
+
+
+def delete_property(request, property_id):
+    _property = Property.objects.get(property_id=property_id)
+    _property.delete()
+    return JsonResponse({'property_id': property_id})
