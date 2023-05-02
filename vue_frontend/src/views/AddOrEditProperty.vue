@@ -19,6 +19,7 @@
   <section class="section-padding pt-0 user-pages-main">
     <div class="container">
       <div class="row">
+        <user-side-bar></user-side-bar>
         <div class="col-lg-9 col-md-9">
           <form @submit.prevent="submitForm">
             <div class="card padding-card">
@@ -112,10 +113,11 @@
 import { getCurrentInstance, onMounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import NavBar from '@/components/NavBar.vue'
+import UserSideBar from '@/components/UserSideBar.vue'
 
 export default {
   name: 'EditOrProperty',
-  components: { NavBar },
+  components: { UserSideBar, NavBar },
   props: {
     mode: {
       type: String,
