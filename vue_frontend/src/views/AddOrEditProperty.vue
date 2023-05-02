@@ -162,7 +162,7 @@ export default {
     onMounted(async () => {
       console.log('ok')
       try {
-        const response = (await instance.appContext.config.globalProperties.$http.get('/get-user-profile/')).data
+        const response = (await (this.axios.get('/get-user-profile/'))).data
         if (response.success) {
           console.log('get:', response)
           userType.value = response['user_type']
