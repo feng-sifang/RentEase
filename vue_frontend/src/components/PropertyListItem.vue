@@ -7,31 +7,27 @@
             Available
           </span>
           <img
-            class="card-img-top"
-            :src="`/static/picture/${property.property_type.toLowerCase()}.png`"
-            alt="Card image cap">
+              class="card-img-top"
+              :src="`/static/picture/${property.property_type.toLowerCase()}.png`"
+              alt="Card image cap"
+          >
         </div>
         <div class="col-lg-7 col-md-7">
-          <div class="card-body">
-            <span class="float-right text-success" v-if="userType==='Agent'">
-              <router-link
-                :to="{ name: 'edit', params: { itemId: property.property_id } }">
-                <i class="mdi mdi-table-edit"></i>Manage
-              </router-link>
-              <router-link
-                class="float-right text-danger"
-                to="/your-delete-path"><i class="mdi mdi-delete-forever"></i>Delete
-              </router-link>
-            </span>
+          <div class="card-body"><span class="float-right text-success" v-if="userType==='Agent'"><router-link
+              :to="{ name: 'edit', params: { itemId: property.property_id } }"><i
+              class="mdi mdi-table-edit">Manage</i></router-link>
+            <a class="float-right text-danger" @click="sendItemId"><i
+                class="mdi mdi-delete-forever"></i>Delete</a>
+</span>
             <h5 class="card-title">
               {{ property.property_type === 'CommercialBuilding' ? 'Commercial Building' : property.property_type }}
             </h5>
-            <h6 class="card-subtitle mb-2 text-muted">
+            <h6
+                class="card-subtitle mb-2 text-muted">
               <i class="mdi mdi-home-map-marker"></i>
               {{ property.property_address }},
               {{ property.property_city }},
-              {{ property.property_state }}
-            </h6>
+              {{ property.property_state }}</h6>
             <h2 class="text-success mb-0 mt-3">
               ${{ property.property_price }}<small>/month</small>
             </h2>
@@ -56,8 +52,7 @@
 <script>
 export default {
   name: 'PropertyListItem',
-
-  props: {
+    props: {
     property: {
       type: Object,
       required: true,
@@ -67,5 +62,15 @@ export default {
       required: true,
     },
   },
+  setup(props, {emit}) {
+    const sendItemId = () => {
+    emit('sent-item-id', props.property.property_id)
+  }
+  return{
+      sendItemId
+  }
+  },
+
+
 }
 </script>
