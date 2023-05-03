@@ -3,16 +3,16 @@
   <section class="bg-dark py-5 user-header">
     <div class="container">
       <div class="row">
-      <div class="col">
-        <!-- Heading -->
-        <h1 class="text-white mb-2">
-          {{ formData.property_type }}
-        </h1>
-        <!-- Text -->
-        <h6 class="font-weight-normal text-white-50 mb-0">
-          {{ 'Property ID: ' + property_id }}
-        </h6>
-      </div>
+        <div class="col">
+          <!-- Heading -->
+          <h1 class="text-white mb-2">
+            {{ formData.property_type }}
+          </h1>
+          <!-- Text -->
+          <h6 class="font-weight-normal text-white-50 mb-0">
+            {{ 'Property ID: ' + property_id }}
+          </h6>
+        </div>
 
       </div>
 
@@ -102,22 +102,22 @@
           </div>
           <div class="card sidebar-card">
             <div class="card-body"><h5 class="card-title mb-4">Book this Property</h5>
-              <form name="sentMessage" @submit.prevent="submitForm">
+              <form name="sentMessage" @submit.prevent="submitBooking">
                 <div class="control-group form-group">
                   <div class="controls"><label>Select Your Credit Card <span class="text-danger">*</span></label><select
-                  class="form-control custom-select" v-model="formData.property_type" :disabled="mode_ === 'edit'">
-                  <option v-for="(c, index) in creditCards" :key="index">{{ c.number }}</option>
-                </select>
+                      class="form-control custom-select" v-model="selectedCreditCardId">
+                    <option v-for="(c, index) in creditCards" :key="index" :value="c.credit_card_id">{{ c.number }}</option>
+                  </select>
                   </div>
                 </div>
                 <div class="control-group form-group">
                   <div class="controls"><label>Start Date <span class="text-danger">*</span></label><input
-                      type="text"  class="form-control" required="">
+                      type="text" class="form-control" required="" v-model="startDate">
                   </div>
                 </div>
-                 <div class="control-group form-group">
+                <div class="control-group form-group">
                   <div class="controls"><label>End Date <span class="text-danger">*</span></label><input
-                      type="text"  class="form-control" required="">
+                      type="text" class="form-control" required="" v-model="endDate">
                   </div>
                 </div>
                 <button type="submit" class="btn btn-success btn-block">Submit Booking</button>
@@ -129,7 +129,6 @@
     </div>
   </section><!-- End Property Single Slider --><!-- Similar Properties -->
   </body>
-
 
 
 </template>
@@ -158,7 +157,7 @@ export default {
     const property_id = ref(props.itemId)
     const itemId = route.params.itemId
     const formData = reactive({
-      // property_id: null,
+      property_id: null,
       property_type: '',
       property_description: '',
       property_price: '',
@@ -176,6 +175,10 @@ export default {
     const phone = ref('')
     const name = ref('')
     const creditCards = ref([])
+    const loginUserId = ref(null)
+    const selectedCreditCardId = ref(null)
+    const startDate = ref('');
+    const endDate = ref('');
 
 
     const allInputsValid = () => {
@@ -205,16 +208,39 @@ export default {
       }
       try {
         const response = (await (instance.appContext.config.globalProperties.$http.get(`/get-user-creditcard/`))).data
-          console.log('get:', response)
+        console.log('get:', response)
 
         creditCards.value = response['credit_cards']
         console.log('get:', creditCards)
       } catch (error) {
         console.log(error)
       }
+      try {
+        const response = (await (instance.appContext.config.globalProperties.$http.get('/get-user-profile/'))).data
+        loginUserId.value = response['user_id']
+      } catch (error) {
+        console.log(error)
+      }
 
 
     })
+    const submitBooking = async () => {
+      console.log(selectedCreditCardId.value)
+      const data = {
+        "user_id": loginUserId.value,
+        "property_id": formData.property_id ,
+        "credit_card_id": selectedCreditCardId.value,
+        "start_date": startDate.value,
+        "end_date": endDate.value,
+        "total_cost": formData.property_price
+      }
+      console.log(data.credit_card_id)
+      try {
+        await instance.appContext.config.globalProperties.$http.post('/create-booking/', data)
+      } catch (error) {
+        console.error('Error', error)
+      }
+    }
 
 
     return {
@@ -224,7 +250,11 @@ export default {
       allInputsValid,
       email,
       name,
-      creditCards
+      creditCards,
+      submitBooking,
+      startDate,
+      endDate,
+      selectedCreditCardId
     }
   },
 }

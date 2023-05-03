@@ -7,7 +7,6 @@ from django.forms.models import model_to_dict
 from dj_backend.models import *
 from datetime import datetime
 
-
 def post_signin(request):
     data = json.loads(request.body)
     if request.method == 'POST':
@@ -130,7 +129,6 @@ def get_user_by_id(request, user_id):
         "location": user.location,
     }
     return JsonResponse(response)
-
 
 
 def save_user_profile(request):
@@ -343,3 +341,30 @@ def delete_property(request, property_id):
     _property = Property.objects.get(property_id=property_id)
     _property.delete()
     return JsonResponse({'property_id': property_id})
+
+
+def create_booking(request):
+    if request.method == 'POST':
+        # Extract the data from the request body
+        data = json.loads(request.body)
+
+        # Create a new Booking instance and save it
+        booking = Booking(
+            user_id=User.objects.get(id=data['user_id']),
+            property_id=Property.objects.get(property_id=data['property_id']),
+            credit_card_id=CreditCard.objects.get(credit_card_id=data['credit_card_id']),
+            start_date=data['start_date'],
+            end_date=data['end_date'],
+            total_cost=data['total_cost']
+        )
+        booking.save()
+
+        # Update the property availability
+        property = Property.objects.get(property_id=data['property_id'])
+        property.property_availability = False
+        property.save()
+
+        # Return a success response
+        return JsonResponse({"message": "Booking created and property availability updated."}, status=201)
+
+    return JsonResponse({"error": "Invalid request method."}, status=400)

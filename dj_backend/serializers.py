@@ -97,6 +97,3 @@ class PropertySerializer(serializers.ModelSerializer):
         else:
             ret.pop('commercial_building')  # Remove 'commercial_building' if it is None
         return ret
-
-
-

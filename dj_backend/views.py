@@ -1,12 +1,12 @@
 from django.views.generic import TemplateView
 from rest_framework import status, generics
+from rest_framework.decorators import api_view
 
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 
 from .models import Property
 from .serializers import PropertySerializer, PropertyQuerySerializer, PropertyCreateSerializer, PropertyListSerializer
-
 
 class HomeView(TemplateView):
     template_name = 'home.html'
@@ -76,3 +76,4 @@ class PropertyDetailView(generics.RetrieveAPIView):
     queryset = Property.objects.all()
     serializer_class = PropertySerializer
     lookup_field = 'property_id'
+
