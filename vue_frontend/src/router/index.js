@@ -48,6 +48,7 @@ const routes = [
     },
     {
         path: '/view-property-detail/:itemId/',
+        name:'view',
         component: ViewPropertyDetail,
         props: route => ({itemId: route.params.itemId}),
     },

@@ -78,16 +78,16 @@ export default {
       }
     }
     const handleDelete = async (criteria) => {
-const userConfirmed = confirm("Are you sure to delete " + criteria + "?");
+      const userConfirmed = confirm("Are you sure to delete " + criteria + "?");
 
-  if (userConfirmed) {
-    try {
-      await instance.appContext.config.globalProperties.$http.get(`/property/delete/${criteria}/`);
-      handleFormData(formData);
-    } catch (error) {
-      console.error('Error fetching properties:', error);
-    }
-  }
+      if (userConfirmed) {
+        try {
+          await instance.appContext.config.globalProperties.$http.get(`/property/delete/${criteria}/`);
+          await handleFormData(formData);
+        } catch (error) {
+          console.error('Error fetching properties:', error);
+        }
+      }
     }
 
     onMounted(async () => {

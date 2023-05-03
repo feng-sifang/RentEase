@@ -139,6 +139,7 @@ export default {
       property_address: '',
       property_city: '',
       property_state: '',
+      property_availability:'',
       user_id: '1',
       num_of_rooms: null,
       business_type: '',
@@ -208,6 +209,9 @@ export default {
         }
         if (!filteredData.land_size) {
           delete filteredData.land_size
+        }
+        if (!filteredData.property_availability) {
+          delete filteredData.property_availability
         }
         if (mode_.value === 'edit') {
           delete filteredData.user_id

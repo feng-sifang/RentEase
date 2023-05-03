@@ -60,7 +60,7 @@ class PropertyQueryAPIView(CreateAPIView):
             elif max_price:
                 filters['property_price__lte'] = max_price
 
-            queryset = Property.objects.filter(**filters)
+            queryset = Property.objects.filter(property_availability=True, **filters)
             serialized_data = PropertyListSerializer(queryset, many=True).data
             return Response(serialized_data)
         else:

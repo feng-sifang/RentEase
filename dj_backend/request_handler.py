@@ -7,6 +7,7 @@ from django.forms.models import model_to_dict
 from dj_backend.models import *
 from datetime import datetime
 
+
 def post_signin(request):
     data = json.loads(request.body)
     if request.method == 'POST':
@@ -296,6 +297,7 @@ def property_detail(request, property_id):
         "property_state": _property.property_state,
         "property_address": _property.property_address,
         "property_price": _property.property_price,
+        "property_availability": _property.property_availability
     }
     print(_property.property_type)
     if _property.property_type == "House":
@@ -368,3 +370,35 @@ def create_booking(request):
         return JsonResponse({"message": "Booking created and property availability updated."}, status=201)
 
     return JsonResponse({"error": "Invalid request method."}, status=400)
+
+
+def get_booking_by_user(request, user_id):
+    user_bookings = Booking.objects.filter(user_id=user_id)
+
+    booked_properties = []
+    for booking in user_bookings:
+        property = Property.objects.get(property_id=booking.property_id.property_id)
+        booked_properties.append((property, booking))
+
+    booked_properties_list = []
+    for property, booking in booked_properties:
+        booked_property = {
+            'booking_id': booking.id,
+            'user_id': booking.user_id.id,
+            'property_id': property.property_id,
+            'credit_card_id': booking.credit_card_id.credit_card_id,
+            'start_date': booking.start_date,
+            'end_date': booking.end_date,
+            'total_cost': str(booking.total_cost),
+            'property_type': property.property_type,
+            'property_description': property.property_description,
+            'property_city': property.property_city,
+            'property_state': property.property_state,
+            'property_address': property.property_address,
+            'property_price': property.property_price,
+            'property_availability': property.property_availability,
+            'property_owner_id': property.user_id.id
+        }
+        booked_properties_list.append(booked_property)
+
+    return JsonResponse(booked_properties_list, safe=False)

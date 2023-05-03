@@ -13,6 +13,9 @@
                 <h5 class="card-title mb-4">
                   My Booking {{ this.bookingIndex }}
                 </h5>
+                <BookingListItem v-for="(p, index) in properties" :key="index" :property="p"/>
+
+
                 <div class="form-group">
                   <label>Booking ID</label>
                   <p type="text" class="form-control">
@@ -62,21 +65,41 @@
 import NavBar from '@/components/NavBar.vue'
 import UserTopSection from '@/components/UserTopSection.vue'
 import UserSideBar from '@/components/UserSideBar.vue'
+import {getCurrentInstance, onMounted, ref} from "vue";
+import BookingListItem from "@/components/BookingListItem.vue";
 
 export default {
   name: 'MyBookingsView',
-  components: { UserSideBar, UserTopSection, NavBar },
-
-  data () {
+  components: {BookingListItem, UserSideBar, UserTopSection, NavBar},
+  setup() {
+    const instance = getCurrentInstance()
+    const properties = ref([])
+    const loginUserId = ref(null)
+    onMounted(async () => {
+      try {
+        const response = (await (instance.appContext.config.globalProperties.$http.get('/get-user-profile/'))).data
+        loginUserId.value = response['user_id']
+      } catch (error) {
+        console.log(error)
+      }
+      try {
+        const response = await instance.appContext.config.globalProperties.$http.get(`/get-booking-by-user/${loginUserId.value}/`)
+        properties.value = response.data
+        console.log('list',properties.value)
+      } catch (error) {
+        console.error('Error fetching properties:', error)
+      }
+    })
     return {
-      bookingIndex: '',
-      bookingID: '',
-      startDate: '',
-      endDate: '',
-      totalCost: '',
-      creditCard: '',
-      propertyName: '',
+      properties,
+      // bookingIndex,
+      // bookingID: '',
+      // startDate: '',
+      // endDate: '',
+      // totalCost: '',
+      // creditCard: '',
+      // propertyName: '',
     }
-  },
+  }
 }
 </script>

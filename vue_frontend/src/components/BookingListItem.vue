@@ -1,11 +1,9 @@
 <template>
-  <div class="col-lg-12 col-md-12">
+  <div class="col-lg-12 col-md-12" >
     <div class="card card-list card-list-view">
       <router-link :to="{ name: 'view', params: { itemId: property.property_id } }"><div class="row no-gutters">
         <div class="col-lg-5 col-md-5">
-          <span class="badge badge-success">
-            Available
-          </span>
+
           <img
               class="card-img-top"
               :src="`/static/picture/${property.property_type.toLowerCase()}.png`"
@@ -29,29 +27,31 @@
               {{ property.property_city }},
               {{ property.property_state }}</h6>
             <h2 class="text-success mb-0 mt-3">
-              ${{ property.property_price }}<small>/month</small>
+              <small>Total Cost: </small>${{ property.property_price }}
             </h2>
           </div>
           <div class="card-footer">
             <span><i class="mdi mdi-sofa"></i>
-              Beds: <strong>3</strong>
+              Start Date: <strong>{{property.start_date}}</strong>
             </span>
             <span><i class="mdi mdi-scale-bathroom"></i>
-              Baths: <strong>2</strong>
+              End Date: <strong>{{property.end_date}}</strong>
             </span>
             <span><i class="mdi mdi-move-resize-variant"></i>
-              Area: <strong>587 sq ft</strong>
+              Booking ID: <strong>{{property.booking_id}}</strong>
             </span>
           </div>
         </div>
-      </div></router-link>
+      </div> </router-link>
     </div>
   </div>
 </template>
 
 <script>
+import {onMounted} from "vue";
+
 export default {
-  name: 'PropertyListItem',
+  name: 'BookingListItem',
     props: {
     property: {
       type: Object,
@@ -65,6 +65,9 @@ export default {
   setup(props, {emit}) {
     const sendItemId = () => {
     emit('sent-item-id', props.property.property_id)
+    onMounted(async () => {
+      console.log("property",props.property)
+    })
   }
   return{
       sendItemId

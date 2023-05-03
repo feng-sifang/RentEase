@@ -18,6 +18,7 @@ urlpatterns = [
     path('get-user-by-id/<int:user_id>/', get_user_by_id, name='get_user_by_id'),
     path('property/edit/<int:property_id>/', update_property, name='property-update'),
     path('property/delete/<int:property_id>/', delete_property, name='property-delete'),
+    path('get-booking-by-user/<int:user_id>/', get_booking_by_user, name='get_booking_by_user'),
     path('create-booking/', create_booking, name='create_booking'),
 
     path('post-signin/', post_signin, name='post_signin'),

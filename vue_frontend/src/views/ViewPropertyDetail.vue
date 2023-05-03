@@ -100,7 +100,7 @@
               </div>
             </div>
           </div>
-          <div class="card sidebar-card">
+          <div class="card sidebar-card" v-if="formData.property_availability">
             <div class="card-body"><h5 class="card-title mb-4">Book this Property</h5>
               <form name="sentMessage" @submit.prevent="submitBooking">
                 <div class="control-group form-group">
@@ -164,6 +164,7 @@ export default {
       property_address: '',
       property_city: '',
       property_state: '',
+      property_availability:'',
       user_id: '1',
       num_of_rooms: null,
       business_type: '',
@@ -188,16 +189,15 @@ export default {
       return true
     }
     const instance = getCurrentInstance()
-
-    onMounted(async () => {
-      try {
+    const getDetail = async () => {try {
         const response = await instance.appContext.config.globalProperties.$http.get(`/property/detail/${itemId}/`)
         Object.assign(formData, response.data)
       } catch (error) {
         console.error(error)
         // Handle error, e.g., show an error message
-      }
-
+      }}
+    onMounted(async () => {
+      await getDetail()
       try {
         const response = (await (instance.appContext.config.globalProperties.$http.get(`/get-user-by-id/${formData.user_id}`))).data
         email.value = response['email']
@@ -225,20 +225,25 @@ export default {
 
     })
     const submitBooking = async () => {
-      console.log(selectedCreditCardId.value)
-      const data = {
-        "user_id": loginUserId.value,
-        "property_id": formData.property_id ,
-        "credit_card_id": selectedCreditCardId.value,
-        "start_date": startDate.value,
-        "end_date": endDate.value,
-        "total_cost": formData.property_price
-      }
-      console.log(data.credit_card_id)
-      try {
-        await instance.appContext.config.globalProperties.$http.post('/create-booking/', data)
-      } catch (error) {
-        console.error('Error', error)
+      const userConfirmed = confirm("Are you sure to book this property?");
+
+      if (userConfirmed) {
+        console.log(selectedCreditCardId.value)
+        const data = {
+          "user_id": loginUserId.value,
+          "property_id": formData.property_id,
+          "credit_card_id": selectedCreditCardId.value,
+          "start_date": startDate.value,
+          "end_date": endDate.value,
+          "total_cost": formData.property_price
+        }
+        console.log(data.credit_card_id)
+        try {
+          await instance.appContext.config.globalProperties.$http.post('/create-booking/', data)
+          await getDetail()
+        } catch (error) {
+          console.error('Error', error)
+        }
       }
     }
 
