@@ -117,6 +117,22 @@ def get_user_profile(request):
         return JsonResponse({"success": False})
 
 
+def get_user_by_id(request, user_id):
+    user = Users.objects.get(id=user_id)
+    # response with common information
+    response = {
+        "user_id": user.id,
+        "user_type": user.user_type,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "email": user.email,
+        "phone": user.phone_number,
+        "location": user.location,
+    }
+    return JsonResponse(response)
+
+
+
 def save_user_profile(request):
     data = json.loads(request.body)
     if request.user.is_authenticated:

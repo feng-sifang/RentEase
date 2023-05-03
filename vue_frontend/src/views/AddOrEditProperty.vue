@@ -19,7 +19,6 @@
   <section class="section-padding pt-0 user-pages-main">
     <div class="container">
       <div class="row">
-        <user-side-bar></user-side-bar>
         <div class="col-lg-9 col-md-9">
           <form @submit.prevent="submitForm">
             <div class="card padding-card">
@@ -67,10 +66,10 @@
                 <div class="row">
                   <div class="form-group col-md-4"><label>Vacation Characteristics </label><input
                     type="text" class="form-control" placeholder="Vacation Characteristics"
-                    :disabled="formData.property_type !== 'Vacation Home'"></div>
+                    :disabled="formData.property_type !== 'Vacation Home'" v-model="formData.characteristics"></div>
                   <div class="form-group col-md-4"><label>Land Size </label><input
                     type="text" class="form-control" placeholder="sq ft"
-                    :disabled="formData.property_type !== 'Land'"></div>
+                    :disabled="formData.property_type !== 'Land'" v-model="formData.land_size"></div>
                   <div class="form-group col-md-4"><label>Rent Price </label><input
                     type="text" class="form-control"
                     placeholder="Enter Rent Price" v-model="formData.property_price"></div>
@@ -113,11 +112,10 @@
 import { getCurrentInstance, onMounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import NavBar from '@/components/NavBar.vue'
-import UserSideBar from '@/components/UserSideBar.vue'
 
 export default {
   name: 'EditOrProperty',
-  components: { UserSideBar, NavBar },
+  components: {  NavBar },
   props: {
     mode: {
       type: String,
@@ -162,7 +160,7 @@ export default {
     onMounted(async () => {
       console.log('ok')
       try {
-        const response = (await (this.axios.get('/get-user-profile/'))).data
+        const response = (await (instance.appContext.config.globalProperties.$http.get('/get-user-profile/'))).data
         if (response.success) {
           console.log('get:', response)
           userType.value = response['user_type']

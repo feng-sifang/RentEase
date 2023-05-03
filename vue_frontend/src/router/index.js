@@ -12,6 +12,7 @@ import AddCreditCard from '@/views/AddCreditCard.vue'
 import MyBookingsView from '@/views/MyBookingsView.vue'
 import RewordPointsView from '@/views/RewordPointsView.vue'
 import AddOrEditProperty from "@/views/AddOrEditProperty.vue";
+import ViewPropertyDetail from "@/views/ViewPropertyDetail.vue";
 
 const routes = [
     {
@@ -37,13 +38,18 @@ const routes = [
     {
         path: '/add-property/',
         component: AddOrEditProperty,
-        props: {mode: 'add'}, //
+        props: {mode: 'add'},
     },
     {
         path: '/edit-property/:itemId/',
         name: 'edit',
         component: AddOrEditProperty,
-        props: route => ({mode: 'edit', itemId: route.params.itemId}), // 通过 props 传递操作类型和 itemId
+        props: route => ({mode: 'edit', itemId: route.params.itemId}),
+    },
+    {
+        path: '/view-property-detail/:itemId/',
+        component: ViewPropertyDetail,
+        props: route => ({itemId: route.params.itemId}),
     },
     {
         path: '/user-creditcard/',
