@@ -42,36 +42,14 @@
             <div class="col-lg-3 col-md-4 col-sm-6 col-6">
               <div class="input-group">
                 <div class="input-group-addon"><i class="mdi mdi-magnify-minus-outline"></i></div>
-                <select class="form-control select2" v-model="formData.min_price">
-                  <option value="" selected>Min Price</option>
-                  <option>100</option>
-                  <option>200</option>
-                  <option>300</option>
-                  <option>400</option>
-                  <option>500</option>
-                  <option>600</option>
-                  <option>700</option>
-                  <option>800</option>
-                  <option>900</option>
-                  <option>1000</option>
-                </select></div>
+                <input type="text" class="form-control" placeholder="Min Price" v-model="formData.min_price">
+                  </div>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 col-6">
               <div class="input-group">
                 <div class="input-group-addon"><i class="mdi mdi-magnify-plus-outline"></i></div>
-                <select class="form-control select2" v-model="formData.max_price">
-                  <option value="" selected>Max Price</option>
-                  <option>1000</option>
-                  <option>2000</option>
-                  <option>3000</option>
-                  <option>4000</option>
-                  <option>5000</option>
-                  <option>6000</option>
-                  <option>7000</option>
-                  <option>8000</option>
-                  <option>9000</option>
-                  <option>10000</option>
-                </select></div>
+                <input type="text" class="form-control" placeholder="Max Price" v-model="formData.max_price">
+                  </div>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 col-6">
               <div class="input-group">
