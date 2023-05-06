@@ -100,7 +100,7 @@
               </div>
             </div>
           </div>
-          <div class="card sidebar-card" v-if="formData.property_availability">
+          <div class="card sidebar-card" v-if="formData.property_availability && loginUserType==='Renter'">
             <div class="card-body"><h5 class="card-title mb-4">Book this Property</h5>
               <form name="sentMessage" @submit.prevent="submitBooking">
                 <div class="control-group form-group">
@@ -178,6 +178,7 @@ export default {
     const name = ref('')
     const creditCards = ref([])
     const loginUserId = ref(null)
+    const loginUserType = ref('')
     const selectedCreditCardId = ref(null)
     const startDate = ref('');
     const endDate = ref('');
@@ -219,6 +220,7 @@ export default {
       try {
         const response = (await (instance.appContext.config.globalProperties.$http.get('/get-user-profile/'))).data
         loginUserId.value = response['user_id']
+        loginUserType.value = response['user_type']
       } catch (error) {
         console.log(error)
       }
@@ -260,7 +262,8 @@ export default {
       submitBooking,
       startDate,
       endDate,
-      selectedCreditCardId
+      selectedCreditCardId,
+      loginUserType
     }
   },
 }
