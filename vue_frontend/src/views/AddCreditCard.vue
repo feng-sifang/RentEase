@@ -125,7 +125,10 @@ export default {
         street: this.street,
         zip: this.zip,
       })
-      console.log(response)
+      if (response.data.success) {
+        alert('Credit Card Added Successfully')
+        window.location.reload()
+      }
     }
   }
 }

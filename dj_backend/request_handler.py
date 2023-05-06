@@ -411,3 +411,13 @@ def get_booking_by_user(request, user_id):
         booked_properties_list.append(booked_property)
 
     return JsonResponse(booked_properties_list, safe=False)
+
+
+def delete_credit_card(request):
+    data = json.loads(request.body)
+    index = data['index']
+    print(data)
+    # print(data['creditCards']['credit_card_id'])
+    credit_card = CreditCard.objects.get(credit_card_id=data['creditCards'][index]['credit_card_id'])
+    credit_card.delete()
+    return JsonResponse({'success': True})
