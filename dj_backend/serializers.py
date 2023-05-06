@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 
-from .models import Property, House, CommercialBuilding, Apartment, Land, VacationHome
+from .models import Property, House, CommercialBuilding
 
 
 class PropertyListSerializer(serializers.ModelSerializer):
@@ -20,16 +20,12 @@ class PropertyQuerySerializer(serializers.Serializer):
 class PropertyCreateSerializer(serializers.ModelSerializer):
     num_of_rooms = serializers.CharField(required=False)
     business_type = serializers.CharField(required=False)
-    land_size = serializers.CharField(required=False)
-    building_type = serializers.CharField(required=False)
-    characteristics = serializers.CharField(required=False)
 
     class Meta:
         model = Property
         fields = ('property_type', 'property_price', 'property_description',
                   'property_address', 'property_city', 'property_state', 'property_price',
-                  'user_id', 'neighbour', 'num_of_rooms', 'building_type', 'business_type', 'characteristics',
-                  'land_size')
+                  'user_id', 'neighbour', 'num_of_rooms', 'business_type')
 
     def validate_num_of_rooms(self, value):
         try:
@@ -44,16 +40,69 @@ class PropertyCreateSerializer(serializers.ModelSerializer):
             house = House.objects.create(**validated_data)
             return house
         elif property_type == 'Apartment':
-            apartment = Apartment.objects.create(**validated_data)
+            apartment = CommercialBuilding.objects.create(**validated_data)
             return apartment
         elif property_type == 'CommercialBuilding':
             commercial_building = CommercialBuilding.objects.create(**validated_data)
             return commercial_building
-        elif property_type == 'Land':
-            land = Land.objects.create(**validated_data)
+        elif property_type == 'land':
+            land = CommercialBuilding.objects.create(**validated_data)
             return land
         elif property_type == 'Vacation Home':
-            vacation_home = VacationHome.objects.create(**validated_data)
+            vacation_home = CommercialBuilding.objects.create(**validated_data)
             return vacation_home
         else:
             raise serializers.ValidationError("Invalid property_type")
+
+
+class HouseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = House
+        fields = ('num_of_rooms',)
+
+
+class CommercialBuildingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CommercialBuilding
+        fields = ('business_type',)
+
+
+class PropertySerializer(serializers.ModelSerializer):
+    house = serializers.SerializerMethodField()
+    commercial_building = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Property
+        fields = ('property_id', 'property_type', 'property_description', 'property_price', 'property_address',
+                  'property_city', 'property_state', 'user_id', 'house', 'commercial_building')
+
+    def get_house(self, obj):
+        if obj.property_type == "House":
+            try:
+                house_obj = House.objects.get(pk=obj.pk)
+                return HouseSerializer(house_obj).data
+            except ObjectDoesNotExist:
+                return None
+        return None
+
+    def get_commercial_building(self, obj):
+        if obj.property_type == "CommercialBuilding":
+            commercial_building_obj = CommercialBuilding.objects.get(pk=obj.pk)
+            return CommercialBuildingSerializer(commercial_building_obj).data
+        return None
+
+    def to_representation(self, instance):
+        # Get the original representation
+        ret = super().to_representation(instance)
+        # Merge the 'house' field into the main representation
+        if ret['house'] is not None:
+            house_data = ret.pop('house')
+            ret.update(house_data)
+        else:
+            ret.pop('house')  # Remove 'house' if it is None
+        if ret['commercial_building'] is not None:
+            commercial_building_data = ret.pop('commercial_building')
+            ret.update(commercial_building_data)
+        else:
+            ret.pop('commercial_building')  # Remove 'commercial_building' if it is None
+        # return ret

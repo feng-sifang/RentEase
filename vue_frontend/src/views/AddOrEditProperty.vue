@@ -225,7 +225,7 @@ export default {
           const post_url = mode_.value === 'edit' ? `/property/edit/${itemId}/` : '/property/add/'
           const response = await instance.appContext.config.globalProperties.$http.post(post_url, filteredData)
           console.log(response)
-          location.reload()
+
         } catch (error) {
           console.error(error)
           // Handle error, e.g., show an error message
