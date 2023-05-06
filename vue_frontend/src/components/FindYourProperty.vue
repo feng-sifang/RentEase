@@ -77,17 +77,25 @@
               <div class="input-group">
                 <div class="input-group-addon"><i class="mdi mdi-map-marker-multiple"></i></div>
                 <select class="form-control select2" v-model="formData.property_city">
-                  <option value="" selected>Any City</option>
-                  <option v-for="(c, index) in cityList" :key="index">{{c}}</option>
-                  <option>Portland</option>
+                  <option value="" selected>Location</option>
+                  <option v-for="(c, index) in cityList" :key="index">{{ c }}</option>
 
                 </select></div>
             </div>
-            <div class="input-group">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+              <div class="input-group">
+                <div class="input-group-addon"><i class="mdi mdi-update"></i></div>
+                <input
+                    type="text" class="form-control" placeholder="Move-in Date" v-model="formData.min_date">
+              </div>
+
+            </div>
+             <div class="input-group">
               <button type="submit" class="btn btn-success btn-block no-radius font-weight-bold">
                 SEARCH
               </button>
             </div>
+
           </div>
         </form>
       </div>
@@ -96,7 +104,7 @@
 </template>
 
 <script>
-import { getCurrentInstance,onMounted, reactive, ref} from 'vue'
+import {getCurrentInstance, onMounted, reactive, ref} from 'vue'
 
 export default {
   name: 'FindYourProperty',
@@ -107,9 +115,11 @@ export default {
       min_price: '',
       max_price: '',
       property_city: '',
+      min_date: ''
     })
     const cityList = ref([])
     const instance = getCurrentInstance()
+
     function submitForm() {
       console.log('Form data:', formData)
       sendFormData()

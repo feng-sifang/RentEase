@@ -1,3 +1,4 @@
+from datetime import timedelta
 from random import choice
 import random
 
@@ -78,6 +79,7 @@ class Property(models.Model):
     property_availability = models.BooleanField(default="True")
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
     neighbour = models.CharField(max_length=30)
+    available_date = models.DateField()
 
     #     Randomly generate Property
 
@@ -98,13 +100,16 @@ class Property(models.Model):
     def generate_fake_data(cls, n, property_type, extra_fields=None):
         extra_fields = extra_fields or {}
         for _ in range(n):
-            user = choice(User.objects.all())
+            user = choice(Agents.objects.all())
             full_address = fake.address()
             parsed_address = usaddress.parse(full_address)
             address_dict = {k: v for (v, k) in parsed_address}
 
             city = address_dict.get('PlaceName', '')
             state = address_dict.get('StateName', '')
+            neighbour = fake.street_name()
+            available_date = fake.date_between(start_date=-timedelta(days=30), end_date=timedelta(days=30))
+
             property_data = {
                 'property_type': property_type,
                 'property_description': fake.text(),
@@ -112,9 +117,10 @@ class Property(models.Model):
                 'property_state': state,
                 'property_address': fake.address(),
                 'property_price': fake.random_int(min=100, max=10000),
-                'property_availability': fake.boolean(),
+                'property_availability': True,
                 'user_id': user,
-                'neighbour': fake.address(),
+                'neighbour': neighbour,
+                'available_date': available_date,
                 **extra_fields
             }
             instance = cls(**property_data)

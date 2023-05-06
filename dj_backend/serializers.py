@@ -13,6 +13,7 @@ class PropertyListSerializer(serializers.ModelSerializer):
 class PropertyQuerySerializer(serializers.Serializer):
     property_type = serializers.CharField(allow_blank=True)
     property_city = serializers.CharField(allow_blank=True)
+    min_date = serializers.CharField(allow_blank=True)
     min_price = serializers.CharField(allow_blank=True)
     max_price = serializers.CharField(allow_blank=True)
 

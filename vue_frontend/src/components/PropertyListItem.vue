@@ -24,13 +24,20 @@
             </h5>
             <h6
                 class="card-subtitle mb-2 text-muted">
-              <i class="mdi mdi-home-map-marker"></i>
+              <i class="mdi mdi-home-map-marker "></i>
               {{ property.property_address }},
               {{ property.property_city }},
               {{ property.property_state }}</h6>
-            <h2 class="text-success mb-0 mt-3">
+            <h2 class="text-success mb-0 mt-3 mr-3">
               ${{ property.property_price }}<small>/month</small>
             </h2>
+            <h6
+                class="card-subtitle mb-2 text-muted"> </h6>
+             <h6
+                class="card-subtitle mb-2 text-muted">
+              <i class="mdi mdi-update"></i>
+              {{ property.available_date }}
+            </h6>
           </div>
         </div>
       </div></router-link>
