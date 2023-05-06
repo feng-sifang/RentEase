@@ -1,7 +1,7 @@
 <template>
   <div class="col-lg-12 col-md-12">
     <div class="card card-list card-list-view">
-      <router-link :to="{ name: 'view', params: { itemId: property.property_id } }"><div class="row no-gutters">
+      <div class="row no-gutters">
         <div class="col-lg-5 col-md-5">
           <span class="badge badge-success">
             Available
@@ -19,9 +19,9 @@
             <a class="float-right text-danger" @click="sendItemId"><i
                 class="mdi mdi-delete-forever"></i>Delete</a>
 </span>
-            <h5 class="card-title">
+            <router-link :to="{ name: 'view', params: { itemId: property.property_id } }"><h5 class="card-title">
               {{ property.property_type === 'CommercialBuilding' ? 'Commercial Building' : property.property_type }}
-            </h5>
+            </h5></router-link>
             <h6
                 class="card-subtitle mb-2 text-muted">
               <i class="mdi mdi-home-map-marker "></i>
@@ -40,7 +40,7 @@
             </h6>
           </div>
         </div>
-      </div></router-link>
+      </div>
     </div>
   </div>
 </template>
