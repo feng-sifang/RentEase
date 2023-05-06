@@ -115,7 +115,7 @@ import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'EditOrProperty',
-  components: {  NavBar },
+  components: { NavBar },
   props: {
     mode: {
       type: String,
@@ -139,7 +139,7 @@ export default {
       property_address: '',
       property_city: '',
       property_state: '',
-      property_availability:'',
+      property_availability: '',
       user_id: '1',
       neighbour: '',
       num_of_rooms: null,
@@ -194,38 +194,42 @@ export default {
         // Show an error message or highlight the invalid fields
         return
       }
+      const userConfirmed = confirm('Are you sure to add property?')
 
-      try {
-        const filteredData = { ...formData }
-        if (!filteredData.num_of_rooms) {
-          delete filteredData.num_of_rooms
-        }
-        if (!filteredData.business_type) {
-          delete filteredData.business_type
-        }
-        if (!filteredData.building_type) {
-          delete filteredData.building_type
-        }
-        if (!filteredData.characteristics) {
-          delete filteredData.characteristics
-        }
-        if (!filteredData.land_size) {
-          delete filteredData.land_size
-        }
-        if (!filteredData.property_availability) {
-          delete filteredData.property_availability
-        }
-        if (mode_.value === 'edit') {
-          delete filteredData.user_id
-        }
+      if (userConfirmed) {
 
-        const post_url = mode_.value === 'edit' ? `/property/edit/${itemId}/` : '/property/add/'
-        const response = await instance.appContext.config.globalProperties.$http.post(post_url, filteredData)
-        console.log(response)
+        try {
+          const filteredData = { ...formData }
+          if (!filteredData.num_of_rooms) {
+            delete filteredData.num_of_rooms
+          }
+          if (!filteredData.business_type) {
+            delete filteredData.business_type
+          }
+          if (!filteredData.building_type) {
+            delete filteredData.building_type
+          }
+          if (!filteredData.characteristics) {
+            delete filteredData.characteristics
+          }
+          if (!filteredData.land_size) {
+            delete filteredData.land_size
+          }
+          if (!filteredData.property_availability) {
+            delete filteredData.property_availability
+          }
+          if (mode_.value === 'edit') {
+            delete filteredData.user_id
+          }
 
-      } catch (error) {
-        console.error(error)
-        // Handle error, e.g., show an error message
+          const post_url = mode_.value === 'edit' ? `/property/edit/${itemId}/` : '/property/add/'
+          const response = await instance.appContext.config.globalProperties.$http.post(post_url, filteredData)
+          console.log(response)
+
+        } catch (error) {
+          console.error(error)
+          // Handle error, e.g., show an error message
+        }
       }
     }
 

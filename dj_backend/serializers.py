@@ -39,9 +39,18 @@ class PropertyCreateSerializer(serializers.ModelSerializer):
             validated_data['num_of_rooms'] = validated_data.pop('num_of_rooms', None)
             house = House.objects.create(**validated_data)
             return house
+        elif property_type == 'Apartment':
+            apartment = CommercialBuilding.objects.create(**validated_data)
+            return apartment
         elif property_type == 'CommercialBuilding':
             commercial_building = CommercialBuilding.objects.create(**validated_data)
             return commercial_building
+        elif property_type == 'land':
+            land = CommercialBuilding.objects.create(**validated_data)
+            return land
+        elif property_type == 'Vacation Home':
+            vacation_home = CommercialBuilding.objects.create(**validated_data)
+            return vacation_home
         else:
             raise serializers.ValidationError("Invalid property_type")
 
@@ -96,4 +105,4 @@ class PropertySerializer(serializers.ModelSerializer):
             ret.update(commercial_building_data)
         else:
             ret.pop('commercial_building')  # Remove 'commercial_building' if it is None
-        return ret
+        # return ret
