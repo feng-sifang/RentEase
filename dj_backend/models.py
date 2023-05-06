@@ -47,7 +47,7 @@ class Renters(Users):
     desired_move_in_date = models.DateField()
     preferred_location = models.CharField(max_length=100)
     budget = models.FloatField()
-    total_cost = models.DecimalField(max_digits=20, decimal_places=2)
+    total_cost = models.FloatField()
 
     @classmethod
     def generate_fake_data(cls, n):

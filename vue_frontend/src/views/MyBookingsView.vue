@@ -14,44 +14,6 @@
                   My Booking {{ this.bookingIndex }}
                 </h5>
                 <BookingListItem v-for="(p, index) in properties" :key="index" :property="p"/>
-
-
-                <div class="form-group">
-                  <label>Booking ID</label>
-                  <p type="text" class="form-control">
-                    {{ this.bookingID }}
-                  </p>
-                </div>
-                <div class="form-group">
-                  <label>Start Date</label>
-                  <p type="text" class="form-control">
-                    {{ this.startDate }}
-                  </p>
-                </div>
-                <div class="form-group">
-                  <label>End Date</label>
-                  <p type="text" class="form-control">
-                    {{ this.endDate }}
-                  </p>
-                </div>
-                <div class="form-group">
-                  <label>Total Cost</label>
-                  <p type="text" class="form-control">
-                    {{ this.totalCost }}
-                  </p>
-                </div>
-                <div class="form-group">
-                  <label>Credit Card</label>
-                  <p type="text" class="form-control">
-                    {{ this.creditCard }}
-                  </p>
-                </div>
-                <div class="form-group">
-                  <label>Property Name</label>
-                  <p type="text" class="form-control">
-                    {{ this.propertyName }}
-                  </p>
-                </div>
               </div>
             </div>
           </form>
