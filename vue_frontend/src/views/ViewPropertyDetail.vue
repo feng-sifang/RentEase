@@ -6,7 +6,7 @@
         <div class="col">
           <!-- Heading -->
           <h1 class="text-white mb-2">
-            {{ formData.property_type }}
+            {{  formData.property_type === 'CommercialBuilding' ? 'Commercial Building' : formData.property_type }}
           </h1>
           <!-- Text -->
           <h6 class="font-weight-normal text-white-50 mb-0">
