@@ -371,8 +371,9 @@ def create_booking(request):
         property = Property.objects.get(property_id=data['property_id'])
         property.property_availability = False
         property.save()
-
-
+        renter = Renters.objects.get(use_ptr_id=data['user_id'])
+        renter.total_cost = data['property_price']
+        renter.save()
 
         # Return a success response
         return JsonResponse({"message": "Booking created and property availability updated."}, status=201)

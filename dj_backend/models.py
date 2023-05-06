@@ -77,6 +77,7 @@ class Property(models.Model):
     property_price = models.FloatField()
     property_availability = models.BooleanField(default="True")
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
+    neighbour = models.CharField(max_length=30)
 
     #     Randomly generate Property
 
@@ -113,6 +114,7 @@ class Property(models.Model):
                 'property_price': fake.random_int(min=100, max=10000),
                 'property_availability': fake.boolean(),
                 'user_id': user,
+                'neighbour': fake.address(),
                 **extra_fields
             }
             instance = cls(**property_data)

@@ -92,7 +92,7 @@
                 <div class="row">
 
                   <div class="form-group col-md-4"><label>Neighborhood </label><input
-                    type="text" class="form-control" placeholder="..."></div>
+                    type="text" class="form-control" placeholder="..." v-model="formData.neighbour"></div>
                 </div>
               </div>
             </div>
@@ -141,11 +141,13 @@ export default {
       property_state: '',
       property_availability:'',
       user_id: '1',
+      neighbour: '',
       num_of_rooms: null,
       business_type: '',
       building_type: '',
       characteristics: '',
       land_size: '',
+
     })
     const userType = ref('')
     const email = ref('')

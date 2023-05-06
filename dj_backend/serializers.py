@@ -25,7 +25,7 @@ class PropertyCreateSerializer(serializers.ModelSerializer):
         model = Property
         fields = ('property_type', 'property_price', 'property_description',
                   'property_address', 'property_city', 'property_state', 'property_price',
-                  'user_id', 'num_of_rooms', 'business_type')
+                  'user_id', 'neighbour', 'num_of_rooms', 'business_type')
 
     def validate_num_of_rooms(self, value):
         try:

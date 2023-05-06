@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                   <p><strong class="text-dark">City :</strong> {{ formData.property_city }}</p>
-                  <p><strong class="text-dark">Neighborhood :</strong> to be</p>
+                  <p><strong class="text-dark">Neighborhood :</strong> {{formData.neighbour}}</p>
                 </div>
               </div>
             </div>
@@ -166,6 +166,7 @@ export default {
       property_state: '',
       property_availability:'',
       user_id: '1',
+      neighbour: '',
       num_of_rooms: null,
       business_type: '',
       building_type: '',
