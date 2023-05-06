@@ -14,6 +14,7 @@ urlpatterns = [
     path('property/find/', PropertyQueryAPIView.as_view(), name='property_find'),
     path('property/add/', PropertyAddView.as_view(), name='property_add'),
 
+    path('user-delete-creditcard/', delete_credit_card, name='user_delete_credit_card'),
     path('property/detail/<int:property_id>/', property_detail, name='property-detail'),
     path('get-user-by-id/<int:user_id>/', get_user_by_id, name='get_user_by_id'),
     path('property/edit/<int:property_id>/', update_property, name='property-update'),

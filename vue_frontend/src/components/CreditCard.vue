@@ -7,7 +7,7 @@
         :key="index">
         <div class="card-body">
           <h5 class="card-title mb-4">
-            Credit Card {{ index }}
+            Credit Card {{ index + 1 }}
           </h5>
           <div class="form-group">
             <label>Credit Card Number <span class="text-danger">*</span></label>
@@ -73,12 +73,16 @@
               v-model="creditCard['zip']"
             />
           </div>
+          <button type="submit" class="btn btn-success mr-3" @click="saveCreditCard">
+            SAVE EDITS
+          </button>
+          <button type="submit" class="btn btn-success" @click="deleteCreditCard(index)">
+            DELETE
+          </button>
         </div>
       </div>
 
-      <button type="submit" class="btn btn-success" @click="saveCreditCard">
-        SAVE EDITS
-      </button>
+
     </form>
   </div>
 </template>
@@ -120,12 +124,28 @@ export default {
         const response = await this.axios.post('/save-user-creditcard/', { creditCards: this.creditCards })
         if (response.data.success) {
           alert('Credit card details have been saved successfully.')
+          window.location.reload()
         } else {
           alert('Failed to save credit card details. Please try again.')
         }
       } catch (error) {
         console.error(error)
         alert('Failed to save credit card details. Please try again.')
+      }
+    },
+
+    async deleteCreditCard (index) {
+      try {
+        const response = await this.axios.post('/user-delete-creditcard/', { creditCards: this.creditCards, index })
+        if (response.data.success) {
+          alert('Credit card details have been deleted successfully.')
+          window.location.reload()
+        } else {
+          alert('Failed to delete credit card details. Please try again.')
+        }
+      } catch (error) {
+        console.error(error)
+        alert('Failed to delete credit card details. Please try again.')
       }
     },
 
