@@ -6,7 +6,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 
 from .models import Property
-from .serializers import PropertySerializer, PropertyQuerySerializer, PropertyCreateSerializer, PropertyListSerializer
+from .serializers import PropertyQuerySerializer, PropertyCreateSerializer, PropertyListSerializer
 
 class HomeView(TemplateView):
     template_name = 'home.html'
@@ -71,9 +71,4 @@ class PropertyAddView(generics.CreateAPIView):
     queryset = Property.objects.all()
     serializer_class = PropertyCreateSerializer
 
-
-class PropertyDetailView(generics.RetrieveAPIView):
-    queryset = Property.objects.all()
-    serializer_class = PropertySerializer
-    lookup_field = 'property_id'
 
