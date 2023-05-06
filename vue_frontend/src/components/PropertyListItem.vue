@@ -32,17 +32,6 @@
               ${{ property.property_price }}<small>/month</small>
             </h2>
           </div>
-          <div class="card-footer">
-            <span><i class="mdi mdi-sofa"></i>
-              Beds: <strong>3</strong>
-            </span>
-            <span><i class="mdi mdi-scale-bathroom"></i>
-              Baths: <strong>2</strong>
-            </span>
-            <span><i class="mdi mdi-move-resize-variant"></i>
-              Area: <strong>587 sq ft</strong>
-            </span>
-          </div>
         </div>
       </div></router-link>
     </div>

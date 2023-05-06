@@ -184,7 +184,7 @@ def property_side_card(request):
 
 
 def property_city_list(request):
-    city_list = Property.objects.values_list('property_city', flat=True).distinct()
+    city_list = Property.objects.filter(availability=True).values_list('property_city', flat=True).distinct()
 
     return HttpResponse(json.dumps(list(city_list)), content_type="application/json")
 
@@ -361,10 +361,18 @@ def create_booking(request):
         )
         booking.save()
 
+        reward_record = RewardRecord(
+            user_id = User.objects.get(id=data['user_id']),
+            property_id=Property.objects.get(property_id=data['property_id']),
+        )
+        reward_record.save()
+
         # Update the property availability
         property = Property.objects.get(property_id=data['property_id'])
         property.property_availability = False
         property.save()
+
+
 
         # Return a success response
         return JsonResponse({"message": "Booking created and property availability updated."}, status=201)
