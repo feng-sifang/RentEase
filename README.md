@@ -1,4 +1,5 @@
 # RentEase - a Housing Rental Platform
-IIT CS-425 database team project
 
-Django + Vue + PostgreSQL 
+一个使用Django + Vue.js + PostgreSQL搭建的房屋租借平台。
+
+IIT CS-425 database team project
